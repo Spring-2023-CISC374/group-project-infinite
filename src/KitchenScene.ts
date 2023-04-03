@@ -27,10 +27,10 @@ export default class KitchenScene extends Phaser.Scene {
         if (!this.cursors) return;
 
 		if (this.cursors.left.isDown) {
-			this.player?.setVelocityX(-160);
+			this.player?.setVelocityX(-300);
 		}
 		else if (this.cursors.right.isDown) {
-			this.player?.setVelocityX(160);
+			this.player?.setVelocityX(300);
 		}
 
 		else {
