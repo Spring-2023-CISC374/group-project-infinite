@@ -30,7 +30,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 		renderStart.draw(startGame);
 		renderStart.setInteractive();
 		renderStart.on('pointerdown',  () => {
-			this.scene.start('GameScene')
+			this.scene.start('KitchenScene')
 		}, this);
 
 		startGame.destroy();
