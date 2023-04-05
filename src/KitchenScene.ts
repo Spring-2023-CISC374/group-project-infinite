@@ -23,7 +23,7 @@ export default class KitchenScene extends Phaser.Scene {
         this.player = this.physics.add.sprite(100, 100, "player");
         this.player.setCollideWorldBounds(true);
         this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.zone = this.add.zone(250, 250, 50, 100);
+        this.zone = this.add.zone(525, 250, 250, 150);
         this.physics.add.existing(this.zone, true);
 
         // create the prompt text
@@ -35,17 +35,21 @@ export default class KitchenScene extends Phaser.Scene {
         this.promptText.setVisible(false);
 
         this.physics.add.overlap(this.player, this.zone, () => {
-        this.promptText?.setVisible(true);
-        this.input.keyboard.once('keydown', (event: KeyboardEvent) => {
-            if (event.key === 'e') {
-                this.scene.start('GameScene');
-            }
-        });
-        }, undefined, this);
+            this.promptText?.setVisible(true);
+            this.input.keyboard.once('keydown', (event: KeyboardEvent) => {
+                if (event.key === 'e') {
+                    this.scene.start('GameScene');
+                }
+            });
+        });    
     }
 
     update() {
         if (!this.cursors) return;
+        if (!this.player) return;
+        if (!this.physics.overlap(this.player, this.zone)) {
+            this.promptText?.setVisible(false);
+        }
 
 		if (this.cursors.left.isDown) {
 			this.player?.setVelocityX(-160);
