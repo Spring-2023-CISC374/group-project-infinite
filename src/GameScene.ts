@@ -24,8 +24,8 @@ export default class GameScene extends Phaser.Scene {
         const pinkliner = this.add.sprite(150, 570,'pink-liner').setScale(.5).setInteractive();
         const blueliner = this.add.sprite(250, 570,'blue-liner').setScale(.5).setInteractive();
         let coins = 0;
-        const coinImage = this.add.image(20, 20, 'coin').setScale(0.05);
-        const coinCounterText = this.add.text(40, 10, `x ${coins}`, { fontSize: '24px', fill: '#000' });
+        const coinImage = this.add.image(20, 32, 'coin').setScale(0.05);
+        const coinCounterText = this.add.text(40, 20, `x ${coins}`, { fontSize: '24px'}).setColor("#fdadac");
 
         this.input.setDraggable(pinkfrost);
         this.input.setDraggable(bluefrost);
@@ -34,7 +34,7 @@ export default class GameScene extends Phaser.Scene {
         this.input.setDraggable(blueliner);
 
         pinkfrost.depth = 100
-        bluefrost.depth = 100  
+        bluefrost.depth = 100
         yellowfrost.depth = 100
         
 
@@ -58,9 +58,11 @@ export default class GameScene extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
+            
 
     
         });
+        
 
         const zone = this.add.zone(400, 350, 90, 70).setRectangleDropZone(90, 70);
         const graphics = this.add.graphics();
@@ -73,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
         
         function updateCoinCounter() {
             coins++;
-            coinCounterText.setText(`x ${coins}`);
+            coinCounterText.setText(`x ${coins}`).setColor("#fdadac");
         }
   
         this.input.on('drop', (pointer, gameObject, dropZone) => {
@@ -85,16 +87,24 @@ export default class GameScene extends Phaser.Scene {
                 updateCoinCounter();
             }
 
-        const graphics1 = this.add.graphics();
-		graphics1.fillStyle(0xfdadac,1);
-		graphics1.fillRoundedRect(5, 5, 150, 60, 30);
-		graphics1.setInteractive();
 	
 
-		
-		const startGame = this.add.text(35,20,"Restart").setFont("20px Arial").setColor("#ffffff").setInteractive();
+        const storeButton = this.add.text(960, 20, 'Store').setFont("32px Arial").setColor("#ffffff").setInteractive();
+        
+        storeButton.on('pointerdown', () => {
+            this.scene.start('StoreScene');
+        }, this);
 
-		const renderStart = this.add.renderTexture(10,5,110,40).setInteractive();
+        });
+
+        const graphics1 = this.add.graphics();
+		graphics1.fillStyle(0xfdadac,1);
+		graphics1.fillRoundedRect(100, 5, 150, 60, 30);
+		graphics1.setInteractive();
+
+		const startGame = this.add.text(40,20,"Restart").setFont("20px Arial").setColor("#ffffff").setInteractive();
+
+		const renderStart = this.add.renderTexture(100,5,110,40).setInteractive();
 		renderStart.draw(graphics1);
 		renderStart.draw(startGame);
 		renderStart.setInteractive();
@@ -108,12 +118,6 @@ export default class GameScene extends Phaser.Scene {
 
         startGame.destroy();
 
-        const storeButton = this.add.text(960, 20, 'Store').setFont("32px Arial").setColor("#ffffff").setInteractive();
-        
-        storeButton.on('pointerdown', () => {
-            this.scene.start('StoreScene');
-        }, this);
-
-        });
     }
+
 }
