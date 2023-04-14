@@ -35,14 +35,9 @@ export default class KitchenScene extends Phaser.Scene {
         this.promptText.setVisible(false);
 
         this.physics.add.overlap(this.player, this.zone, () => {
-        this.promptText?.setVisible(true);
-        this.input.keyboard.once('keydown', (event: KeyboardEvent) => {
-            if (event.key === 'e') {
-                this.scene.start('GameScene');
-            }
-        });
+            this.promptText?.setVisible(true);
+            this.inZone = true; 
         }, undefined, this);
-   
     }  
 
     update() {
@@ -60,7 +55,13 @@ export default class KitchenScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.up.isDown && this.player?.body.touching.down) {
-			this.player.setVelocityY(-400);
+			this.player.setVelocityY(-330);
+        }
+
+        if (this.inZone && Phaser.Input.Keyboard.JustDown(this.interactKey!)) {
+            this.scene.start('GameScene');
+            this.inZone = false;
 		}
     }
-}   
+}
+
