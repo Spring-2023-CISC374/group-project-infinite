@@ -8,13 +8,14 @@ export default class KitchenScene extends Phaser.Scene {
     private promptText?: Phaser.GameObjects.Text;
     
     constructor() {
-        super("KitchenScene")
+        super("KitchenScene")  
     }
 
     preload() {
         this.load.image("kitchen", "assets/kitchen.jpeg");
-        this.load.image("player", "assets/player.png");
-    }
+        this.load.image("instructions", "assets/instructions.png");
+        this.load.image("player", "assets/baker.png");
+    }   
 
     create() {
         this.add.image(545, 305, "kitchen");
@@ -23,39 +24,35 @@ export default class KitchenScene extends Phaser.Scene {
         this.player = this.physics.add.sprite(100, 100, "player");
         this.player.setCollideWorldBounds(true);
         this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.zone = this.add.zone(525, 250, 250, 150);
+        this.zone = this.add.zone(250, 250, 50, 100);
         this.physics.add.existing(this.zone, true);
 
-        // create the prompt text
-        this.promptText = this.add.text(300, 150, 'Press E to bake!', {
+        this.promptText = this.add.text(400, 510, 'Press E to bake!', {
         fontFamily: 'Arial',
-        fontSize: '40px',
+        fontSize: '40px',  
         color: '#000'
         });
         this.promptText.setVisible(false);
 
         this.physics.add.overlap(this.player, this.zone, () => {
-            this.promptText?.setVisible(true);
-            this.input.keyboard.once('keydown', (event: KeyboardEvent) => {
-                if (event.key === 'e') {
-                    this.scene.start('GameScene');
-                }
-            });
-        });    
-    }
+        this.promptText?.setVisible(true);
+        this.input.keyboard.once('keydown', (event: KeyboardEvent) => {
+            if (event.key === 'e') {
+                this.scene.start('GameScene');
+            }
+        });
+        }, undefined, this);
+   
+    }  
 
     update() {
         if (!this.cursors) return;
-        if (!this.player) return;
-        if (!this.physics.overlap(this.player, this.zone)) {
-            this.promptText?.setVisible(false);
-        }
-
+  
 		if (this.cursors.left.isDown) {
-			this.player?.setVelocityX(-300);
+			this.player?.setVelocityX(-320);
 		}
 		else if (this.cursors.right.isDown) {
-			this.player?.setVelocityX(300);
+			this.player?.setVelocityX(320);
 		}
 
 		else {

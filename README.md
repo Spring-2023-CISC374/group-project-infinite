@@ -5,4 +5,4 @@ Ryan:
 Created the play component and gave it movement and life. Set up boundaries on the map so that the character stays inside of bounds.
 
 Sara:
-Created the home screen and the baking component scene so that when you interacte with the countertop where the baking stuff will be in the kitchen, it will direct you to the baking station where you can drag and drop and create cupcakes as you wish.
+Created the home screen and the baking component scene so that when you interact with the counter-top where the baking stuff will be in the kitchen, it will direct you to the baking station where you can drag and drop and create cupcakes as you wish.

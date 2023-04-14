@@ -8,9 +8,8 @@ export default class HelloWorldScene extends Phaser.Scene {
 
 	preload() {
 		this.load.image('bakery','assets/bakery.png')
-
-	}
-
+	}  
+    
 	create() {
 		this.add.image(545, 305,'bakery');
 
@@ -18,12 +17,9 @@ export default class HelloWorldScene extends Phaser.Scene {
 
 		const graphics = this.add.graphics();
 		graphics.fillStyle(0xfdadac,1);
-		graphics.fillRoundedRect(300, 300, 200, 90, 20);
-		graphics.setInteractive();
-	
+		graphics.fillRoundedRect(300, 300, 200, 90, 20);	
 
-		
-		const startGame = this.add.text(52, 35, "Start Game").setFont("20px Arial").setColor("#ffffff").setInteractive();
+		const startGame = this.add.text(52, 35, "Start Game").setFont("20px Arial").setColor("#ffffff").setBackgroundColor('transparent').setInteractive();
 
 		const renderStart = this.add.renderTexture(300, 300, 200, 90).setInteractive();
 		renderStart.draw(graphics);
@@ -31,24 +27,26 @@ export default class HelloWorldScene extends Phaser.Scene {
 		renderStart.setInteractive();
 		renderStart.on('pointerdown',  () => {
 			this.scene.start('KitchenScene')
-		}, this);
-
+		}, this);  
+  
 		startGame.destroy();
 
 		const graphics2 = this.add.graphics();
 		graphics2.fillStyle(0xfdadac,1);
 		graphics2.fillRoundedRect(575, 300, 200, 90, 20);
-		graphics2.setInteractive();
 		
-		const instructions = this.add.text(52, 35, "Instructions").setFont("20px Arial").setColor("#ffffff").setInteractive();
+		const instructions = this.add.text(52, 35, "Instructions").setFont("20px Arial").setColor("#ffffff").setBackgroundColor('transparent').setInteractive();
 
 		const renderStart2 = this.add.renderTexture(575, 300, 200, 90);
 		renderStart2.draw(graphics2);
 		renderStart2.draw(instructions);
+		renderStart2.setInteractive();
+		renderStart2.on('pointerdown', () => {
+			this.scene.start('InstructionsScene');
+		}, this);
 
 		instructions.destroy();
-		
 
-		
+  
 	}
 }
