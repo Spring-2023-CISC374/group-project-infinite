@@ -40,20 +40,6 @@ export default class GameScene extends Phaser.Scene {
             gameObject.x = dragX;
             gameObject.y = dragY;
         })
-        this.input.on('dragenter', function (pointer: any, gameObject: any, dropZone: any) {
-
-            graphics.clear();
-            graphics.lineStyle(2, 0x00ffff);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    
-        });
-        this.input.on('dragleave', function (pointer: any, gameObject: any, dropZone: any) {
-
-            graphics.clear();
-            graphics.lineStyle(2, 0xffff00);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    
-        });
         this.input.on('drop', function (pointer: any, gameObject: { x: any; y: any; input: { enabled: boolean } }, dropZone: { x: any; y: any }) {
 
             gameObject.x = dropZone.x;
@@ -70,23 +56,42 @@ export default class GameScene extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-    
-            graphics.clear();
-            graphics.lineStyle(2, 0xffff00);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
     
         });
 
         const zone = this.add.zone(400, 350, 90, 70).setRectangleDropZone(90, 70);
         const graphics = this.add.graphics();
-        graphics.lineStyle(2, 0xffff00);
+        graphics.lineStyle(1, 0xffffff);
         graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         const zone2 = this.add.zone(400, 275, 90, 70).setRectangleDropZone(90, 70);
         const graphics2 = this.add.graphics();
-        graphics2.lineStyle(2, 0xffff00);
+        graphics2.lineStyle(1, 0xffffff);
         graphics2.strokeRect(zone2.x - zone2.input.hitArea.width / 2, zone2.y - zone2.input.hitArea.height / 2, zone2.input.hitArea.width, zone2.input.hitArea.height);
         
 
+        const graphics1 = this.add.graphics();
+		graphics1.fillStyle(0xfdadac,1);
+		graphics1.fillRoundedRect(5, 5, 150, 60, 30);
+		graphics1.setInteractive();
+	
+
+		
+		const startGame = this.add.text(35,20,"Restart").setFont("20px Arial").setColor("#ffffff").setInteractive();
+
+		const renderStart = this.add.renderTexture(10,5,110,40).setInteractive();
+		renderStart.draw(graphics1);
+		renderStart.draw(startGame);
+		renderStart.setInteractive();
+		renderStart.on('pointerdown',  () => {
+            blueliner.setPosition(250, 570)
+            pinkliner.setPosition(150, 570)
+            pinkfrost.setPosition(820, 320)
+            yellowfrost.setPosition(740, 320)
+            bluefrost.setPosition(900, 320)
+		}, this);
+
+        startGame.destroy();
 
     }
 

@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
-import BaseScene from './BaseBakeryScene'
 
 
-export default class GameScene extends BaseScene {
+
+export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super("BakeryScene")
 	}
