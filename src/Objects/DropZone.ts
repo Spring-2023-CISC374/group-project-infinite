@@ -30,11 +30,10 @@ export default class DropZone extends Phaser.GameObjects.Zone {
             }
         })
 
-        scene.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: any, dropZone: Phaser.GameObjects.Zone) => {
-            const asDraggable = (gameObject as DraggableImage);
+        scene.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: DraggableImage, dropZone: Phaser.GameObjects.Zone) => {
             if (!dropZone) {
-                gameObject.x = asDraggable.originalX;
-                gameObject.y = asDraggable.originalY;
+                gameObject.x = gameObject.originalX;
+                gameObject.y = gameObject.originalY;
             }
         })
 
