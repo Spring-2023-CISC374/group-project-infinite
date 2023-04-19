@@ -7,10 +7,6 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
 
         this.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
             this.setPosition(dragX, dragY);
-            const body = this.body as Phaser.Physics.Arcade.Body;
-            if (body) {
-                body.setVelocity(0, 0);
-            }
         })
 
         
