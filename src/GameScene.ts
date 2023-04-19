@@ -33,11 +33,11 @@ export default class GameScene extends Phaser.Scene {
         const coinImage = this.add.image(20, 20, 'coin').setScale(0.05);
         const coinCounterText = this.add.text(40, 10, `x ${coins}`, { fontSize: '24px', fill: '#000' });
 
-        const zone1 = new DropZone(this, 400, 350);
-        const graphic1 = new DropZoneGraphic(this, 400, 350);
+        const linerZone = new DropZone(this, 400, 350, 'linerZone');
+        const linerZoneGraphic = new DropZoneGraphic(this, 400, 350);
 
-        const zone2 = new DropZone(this, 400, 275);
-        const graphic2 = new DropZoneGraphic(this, 400, 275);
+        const frostingZone = new DropZone(this, 400, 275, 'frostingZone');
+        const frostingZoneGraphic = new DropZoneGraphic(this, 400, 275);
         
         function updateCoinCounter() {
             coins++;
