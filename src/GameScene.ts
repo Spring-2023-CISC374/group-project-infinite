@@ -42,46 +42,46 @@ export default class GameScene extends Phaser.Scene {
         // yellowfrost.depth = 100
         
 
-        // this.input.on('drag', function (pointer: any, gameObject: { x: any; y: any },dragX: any, dragY: any){
-        //     gameObject.x = dragX;
-        //     gameObject.y = dragY;
-        // })
-        // this.input.on('dragenter', function (pointer: any, gameObject: any, dropZone: any) {
+        this.input.on('drag', function (pointer: any, gameObject: { x: any; y: any },dragX: any, dragY: any){
+            gameObject.x = dragX;
+            gameObject.y = dragY;
+        })
+        this.input.on('dragenter', function (pointer: any, gameObject: any, dropZone: any) {
 
-        //     graphics.clear();
-        //     graphics.lineStyle(2, 0x00ffff);
-        //     graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            graphics.clear();
+            graphics.lineStyle(2, 0x00ffff);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     
-        // });
-        // this.input.on('dragleave', function (pointer: any, gameObject: any, dropZone: any) {
+        });
+        this.input.on('dragleave', function (pointer: any, gameObject: any, dropZone: any) {
 
-        //     graphics.clear();
-        //     graphics.lineStyle(2, 0xffff00);
-        //     graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     
-        // });
-        // this.input.on('drop', function (pointer: any, gameObject: { x: any; y: any; input: { enabled: boolean } }, dropZone: { x: any; y: any }) {
+        });
+        this.input.on('drop', function (pointer: any, gameObject: { x: any; y: any; input: { enabled: boolean } }, dropZone: { x: any; y: any }) {
 
-        //     gameObject.x = dropZone.x;
-        //     gameObject.y = dropZone.y;
+            gameObject.x = dropZone.x;
+            gameObject.y = dropZone.y;
     
-        //     gameObject.input.enabled = true;
+            gameObject.input.enabled = true;
     
-        // });
+        });
 
-        // this.input.on('dragend', function (pointer: any, gameObject: { x: any; input: { dragStartX: any; dragStartY: any }; y: any }, dropped: any) {
+        this.input.on('dragend', function (pointer: any, gameObject: { x: any; input: { dragStartX: any; dragStartY: any }; y: any }, dropped: any) {
 
-        //     if (!dropped)
-        //     {
-        //         gameObject.x = gameObject.input.dragStartX;
-        //         gameObject.y = gameObject.input.dragStartY;
-        //     }
+            if (!dropped)
+            {
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
     
-        //     graphics.clear();
-        //     graphics.lineStyle(2, 0xffff00);
-        //     graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     
-        // });
+        });
 
         const zone = this.add.zone(400, 350, 90, 70).setRectangleDropZone(90, 70);
         const graphics = this.add.graphics();
