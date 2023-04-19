@@ -1,4 +1,6 @@
 import DraggableImage from "./DraggableImage";
+import Liner from "./Liner";
+import Frosting from "./Frosting";
 
 export default class DropZone extends Phaser.GameObjects.Zone {
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -8,7 +10,19 @@ export default class DropZone extends Phaser.GameObjects.Zone {
         this.setRectangleDropZone(width, height);
 
         scene.input.on('drop', (_pointer: Phaser.Input.Pointer, gameObject: any, dropZone: Phaser.GameObjects.Zone) => {
-            gameObject.setPosition(dropZone.x, dropZone.y);
+            if (gameObject instanceof Liner && dropZone.y === 350) {
+                gameObject.setPosition(dropZone.x, dropZone.y);
+            } 
+            else if (gameObject instanceof Liner && dropZone.y !== 350) {
+                gameObject.setPosition(gameObject.originalX, gameObject.originalY);
+            }
+            
+            if (gameObject instanceof Frosting && dropZone.y === 275) {
+                gameObject.setPosition(dropZone.x, dropZone.y);
+            } 
+            else if (gameObject instanceof Frosting && dropZone.y !== 275) {
+                gameObject.setPosition(gameObject.originalX, gameObject.originalY);
+            }
         })
 
         scene.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: any, dropZone: Phaser.GameObjects.Zone) => {
