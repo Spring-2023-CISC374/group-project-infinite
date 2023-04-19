@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 import Frosting from './Objects/Frosting'
 import Liner from './Objects/Liner'
-import Zone from './Objects/Zone'
 import DropZoneGraphic from './Objects/DropZoneGraphic'
+import DropZone from './Objects/DropZone'
 
 
 export default class GameScene extends Phaser.Scene {
@@ -33,10 +33,10 @@ export default class GameScene extends Phaser.Scene {
         const coinImage = this.add.image(20, 20, 'coin').setScale(0.05);
         const coinCounterText = this.add.text(40, 10, `x ${coins}`, { fontSize: '24px', fill: '#000' });
 
-        const zone1 = new Zone(this, 400, 350);
+        const zone1 = new DropZone(this, 400, 350);
         const graphic1 = new DropZoneGraphic(this, 400, 350);
 
-        const zone2 = new Zone(this, 400, 275);
+        const zone2 = new DropZone(this, 400, 275);
         const graphic2 = new DropZoneGraphic(this, 400, 275);
         
         function updateCoinCounter() {
