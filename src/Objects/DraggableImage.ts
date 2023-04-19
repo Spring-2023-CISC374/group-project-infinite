@@ -4,11 +4,9 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
         this.setInteractive();
         scene.input.setDraggable(this);
 
-
         this.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
             this.setPosition(dragX, dragY);
         })
 
-        
     }
 }
