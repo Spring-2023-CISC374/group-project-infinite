@@ -1,3 +1,5 @@
+import DraggableImage from "./DraggableImage";
+
 export default class Zone extends Phaser.GameObjects.Zone {
     constructor(scene: Phaser.Scene, x: number, y: number) {
         const width = 90;
@@ -8,5 +10,14 @@ export default class Zone extends Phaser.GameObjects.Zone {
         scene.input.on('drop', (_pointer: Phaser.Input.Pointer, gameObject: any, dropZone: Phaser.GameObjects.Zone) => {
             gameObject.setPosition(dropZone.x, dropZone.y);
         })
+
+        scene.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: any, dropZone: Phaser.GameObjects.Zone) => {
+            const asDraggable = (gameObject as DraggableImage);
+            if (!dropZone) {
+                gameObject.x = asDraggable.originalX;
+                gameObject.y = asDraggable.originalY;
+            }
+        })
+
     }
 }
