@@ -1,67 +1,61 @@
-import Phaser from 'phaser'
+import Phaser from "phaser";
 
 export default class tilemapScene extends Phaser.Scene {
-	private player?: Phaser.Physics.Matter.Sprite;
-	private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-    constructor(){
-        super('tilemapScene')
+  private player?: Phaser.Physics.Arcade.Sprite;
+  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
+  private stove?: Phaser.Types.Tilemaps.TiledObject;
+  constructor() {
+    super("tilemapScene");
+  }
+  preload() {
+    // load the PNG file
+
+    this.load.image("player", "assets/baker.png");
+    this.load.image("tiles", "assets/tileset.png");
+
+    // load the JSON file
+    this.load.tilemapTiledJSON("map", "assets/game.json");
+  }
+
+  create() {
+    const map = this.make.tilemap({ key: "map" });
+    const tileset = map.addTilesetImage("kitchen", "tiles");
+    const floor = map.createLayer("floor", tileset, 0, 0);
+    const background = map.createLayer("background", tileset, 0, 0);
+    const equipment = map.createLayer("stove", tileset, 0, 0);
+    const objectLayer = map.getObjectLayer("objects");
+    const objects = objectLayer.objects;
+    for (var i = 0; i < objects.length; i++) {
+      if (objects[i].name === "stovetop") {
+        // replace 'objectName' with the name of the object you want to get
+        var object = objects[i];
+        this.stove = object;
+        break;
+      }
     }
-    preload(){
-	// load the PNG file
 
-	this.load.image("player", "assets/baker.png");
-	this.load.image('tiles', 'assets/tileset.png')
+    console.log(this.stove);
 
+    this.cursors = this.input.keyboard.createCursorKeys();
 
-	// load the JSON file
-	this.load.tilemapTiledJSON('tilemap', 'assets/game.json')
-	}
-
-create(){
-
-	
-	this.cursors = this.input.keyboard.createCursorKeys();
-
-	const map = this.make.tilemap({key: 'tilemap'})
-	const tileset = map.addTilesetImage("kitchen", "tiles")
-
-	const floor = map.createLayer('floor', tileset)
-	floor.setCollisionByProperty({ collides: true})
-
-	const background = map.createLayer('background', tileset)
-	const stove =  map.createLayer('stove', tileset)
-
-
-	this.player?.setScale(.8)
-	this.matter.world.convertTilemapLayer(floor)
-
-	const {width, height} = this.scale	
-	this.player = this.matter.add.sprite(width * 0.1, height * 0.1, 'player')
-
-    const camera = this.cameras.main;
-    
-    // set the initial camera zoom and position
-
-    // add a key listener to zoom in when the 'Z' key is pressed
-    this.input.keyboard.on('keydown-Z', () => {
-        camera.zoomTo(2, 1000);
+    this.player = this.physics.add.sprite(0, 0, "player").setScale(0.2);
+    floor.setCollisionByProperty({ collides: true });
+    this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(this.player, floor);
+    this.physics.add.collider(this.player, this.stove, function () {
+      // code to execute when the sprite collides with the tilemap object
     });
+  }
 
-	}
+  update() {
+    if (!this.cursors) return;
 
-	update() {
-        if (!this.cursors) return;
-  
-		if (this.cursors.left.isDown) {
-			this.player?.setVelocityX(-30);
-		}
-		else if (this.cursors.right.isDown) {
-			this.player?.setVelocityX(30);
-		}
-
-		else {
-			this.player?.setVelocityX(0);
-		}
-
+    if (this.cursors.left.isDown) {
+      this.player?.setVelocityX(-100);
+    } else if (this.cursors.right.isDown) {
+      this.player?.setVelocityX(100);
+    } else {
+      this.player?.setVelocityX(0);
     }
+  }
 }
