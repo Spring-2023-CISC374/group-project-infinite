@@ -32,11 +32,11 @@
         }, 
         {
          "compression":"",
-         "data":"AAAAAEsAAABLAAAASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAABUAAAAVAAAAAAAAABbAAAAXAAAAF0AAABeAAAAXwAAAGAAAABhAAAAfQAAAH0AAAB9AAAAfQAAAH0AAABkAAAAZQAAAGYAAABnAAAAaAAAAGkAAABqAAAAhgAAAIYAAACGAAAAhgAAAIYAAABtAAAAbgAAAG8AAABwAAAAcQAAAHIAAABzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+         "data":"AAAAAEsAAABLAAAASwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAABUAAAAVAAAAAAAAABbAAAAXAAAAF0AAABeAAAAXwAAAGAAAABhAAAAfQAAAH0AAAB9AAAAfQAAAH0AAABkAAAAZQAAAAAAAABnAAAAaAAAAGkAAABqAAAAhgAAAIYAAACGAAAAhgAAAIYAAABtAAAAbgAAAAAAAABwAAAAcQAAAHIAAABzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
          "encoding":"base64",
          "height":6,
          "id":4,
-         "name":"stove",
+         "name":"equipment",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -45,28 +45,20 @@
          "y":0
         }, 
         {
-         "draworder":"topdown",
-         "id":5,
-         "name":"objects",
-         "objects":[
-                {
-                 "height":0,
-                 "id":1,
-                 "name":"stovetop",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":119.515,
-                 "y":52.912
-                }],
+         "compression":"",
+         "data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+         "encoding":"base64",
+         "height":6,
+         "id":7,
+         "name":"stove",
          "opacity":1,
-         "type":"objectgroup",
+         "type":"tilelayer",
          "visible":true,
+         "width":12,
          "x":0,
          "y":0
         }],
- "nextlayerid":7,
+ "nextlayerid":8,
  "nextobjectid":2,
  "orientation":"orthogonal",
  "renderorder":"right-down",
@@ -1090,7 +1082,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":false
+                         "value":true
                         }]
                 }, 
                 {

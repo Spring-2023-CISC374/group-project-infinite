@@ -18,33 +18,40 @@ export default class tilemapScene extends Phaser.Scene {
   }
 
   create() {
+    let collisionDetected = false;
+
+    function handleCollision() {
+      if (!collisionDetected) {
+        console.log("Collision detected!");
+        collisionDetected = true;
+      }
+    }
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("kitchen", "tiles");
     const floor = map.createLayer("floor", tileset, 0, 0);
     const background = map.createLayer("background", tileset, 0, 0);
-    const equipment = map.createLayer("stove", tileset, 0, 0);
-    const objectLayer = map.getObjectLayer("objects");
-    const objects = objectLayer.objects;
-    for (var i = 0; i < objects.length; i++) {
-      if (objects[i].name === "stovetop") {
-        // replace 'objectName' with the name of the object you want to get
-        var object = objects[i];
-        this.stove = object;
-        break;
-      }
-    }
+    const equipment = map.createLayer("equipment", tileset, 0, 0);
+    const stove = map.createLayer("stove", tileset, 0, 0);
 
     console.log(this.stove);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.player = this.physics.add.sprite(0, 0, "player").setScale(0.2);
+    stove.setCollisionByProperty({ collides: false });
     floor.setCollisionByProperty({ collides: true });
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, floor);
-    this.physics.add.collider(this.player, this.stove, function () {
-      // code to execute when the sprite collides with the tilemap object
-    });
+    this.physics.add.collider(this.player, stove, handleCollision, null, this);
+    this.physics.add.collider(
+      this.player,
+      stove,
+      () => {
+        collisionDetected = false;
+      },
+      null,
+      this
+    );
   }
 
   update() {
