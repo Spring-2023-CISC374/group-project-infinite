@@ -26,31 +26,34 @@ export default class tilemapScene extends Phaser.Scene {
     const background = map.createLayer("background", tileset, 0, 0);
     const equipment = map.createLayer("equipment", tileset, 0, 0);
     const stove = map.createLayer("stove", tileset, 0, 0);
-    this.promptText = this.add.text(0, 0, "Press E to bake!", {
-      fontFamily: "Arial",
-      fontSize: "10px",
-      color: "#000",
-    });
+    this.promptText = this.add
+      .text(0, 0, "Press E to bake!", {
+        fontFamily: "Arial",
+        fontSize: "10px",
+        color: "#000",
+      })
+      .setVisible(false);
+
     const handleCollision = () => {
       this.promptText?.setVisible(true);
+      this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
+        if (event.key === "e") {
+          this.scene.start("GameScene");
+        }
+      });
     };
-    this.promptText?.setVisible(false);
 
     console.log(this.stove);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.player = this.physics.add.sprite(0, 0, "player").setScale(0.2);
-    stove.setCollisionByProperty({ collides: false });
+
     floor.setCollisionByProperty({ collides: true });
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, floor);
     stove.setTileIndexCallback(111, handleCollision, this);
     this.physics.add.overlap(this.player, stove);
-
-    eKey.on("down", () => {
-      this.scene.start("GameScene");
-    });
   }
 
   update() {
