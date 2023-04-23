@@ -4,7 +4,7 @@ import DropZone from "./DropZone";
 export default class Liner extends DraggableImage {
     
     constructor(scene: Phaser.Scene, x: number, y: number, linerKey: string, zone: DropZone) {
-        super(scene, x, y, linerKey);
+        super(scene, x, y, linerKey, zone);
         this.setScale(0.5);
 
         this.on('drop', (_pointer: Phaser.Input.Pointer, dropZone: DropZone) => {
@@ -16,19 +16,7 @@ export default class Liner extends DraggableImage {
                 this.setPosition(this.originalX, this.originalY);
             }
         })
-
-        this.on('dragend', () => {            
-            if (!zone.getBounds().contains(this.x, this.y)) {
-                this.setPosition(this.originalX, this.originalY);
-            }
-        })
-
-        this.on('dragleave', (_pointer: Phaser.Input.Pointer, dropZone: DropZone) => {
-            if (dropZone.currItem === this) {
-                 dropZone.setItem(null);
-            }
-        })
-
+        
         scene.add.existing(this);
     }
 }
