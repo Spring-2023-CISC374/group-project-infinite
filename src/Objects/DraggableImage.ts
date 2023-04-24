@@ -1,28 +1,31 @@
+import DropZone from "./DropZone";
+
 export default class DraggableImage extends Phaser.GameObjects.Image {
+    originalX: number;
+    originalY: number;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
-        super(scene, x, y, texture);      
-
+    constructor(scene: Phaser.Scene, x: number, y: number, imageKey: string, zone: DropZone) {
+        super(scene, x, y, imageKey);
+        this.originalX = x;
+        this.originalY = y;
         this.setInteractive();
         scene.input.setDraggable(this);
 
-        this.on('pointerover', () => {
-            this.setTint(0x44ff44);
-        });
+        this.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+            this.setPosition(dragX, dragY);
+        })
 
-        this.on('pointerout', () => {
-            this.clearTint();
-        });
+        this.on('dragend', () => {            
+            if (!zone.getBounds().contains(this.x, this.y)) {
+                this.setPosition(this.originalX, this.originalY);
+            }
+        })
 
-        // input.on  drag event  Pointer triggering event, gameObject, x & y
-        scene.input.on('drag', this.handleDrag, this);
+        this.on('dragleave', (_pointer: Phaser.Input.Pointer, dropZone: DropZone) => {
+            if (dropZone.currItem === this) {
+                 dropZone.setItem(null);
+            }
+        })
 
     }
-    // when this is called from other scenes it will pass these values    
-    handleDrag(mouse: Phaser.Input.Pointer, gameObject: DraggableImage, dragX: number, dragY: number) {
-        console.log("handleDrag " + this.x + " " + this.y);
-        this.x = dragX;
-        this.y = dragY;
-    }    
-   
 }
