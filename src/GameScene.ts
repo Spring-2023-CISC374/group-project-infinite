@@ -1,12 +1,11 @@
 import Phaser from 'phaser'
 
-
 export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super("GameScene")
 	}
     preload() {
-        this.load.image('bakery2','assets/bakery.png')
+        this.load.image('bakery2','assets/newbakery_drawing.png')
         this.load.image('blue-liner', 'assets/liner-blue.png')
 		this.load.image('pink-liner', 'assets/liner-pink.png')
 		this.load.image('pink-frosting', 'assets/pink-frosting.png')
@@ -16,7 +15,10 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(545, 305,'bakery2'); 
+        this.add.image(550, 305, 'bakery2').setScale(0.665);
+
+        this.add.graphics({ fillStyle: { color: 0xfdadac } }).fillEllipse(70, 30, 120, 50);
+        const startGame = this.add.text(35,20,"Restart").setFont("20px Arial").setColor("#ffffff").setInteractive();
 
         const bluefrost = this.add.sprite(900, 320,'blue-frosting').setScale(.15).setInteractive();
         const pinkfrost = this.add.sprite(820, 320,'pink-frosting').setScale(.15).setInteractive();
@@ -24,8 +26,23 @@ export default class GameScene extends Phaser.Scene {
         const pinkliner = this.add.sprite(150, 570,'pink-liner').setScale(.5).setInteractive();
         const blueliner = this.add.sprite(250, 570,'blue-liner').setScale(.5).setInteractive();
         let coins = 0;
-        const coinImage = this.add.image(20, 20, 'coin').setScale(0.05);
-        const coinCounterText = this.add.text(40, 10, `x ${coins}`, { fontSize: '24px', fill: '#000' });
+        const coinImage = this.add.image(520, 20, 'coin').setScale(0.05);
+        const coinCounterText = this.add.text(550, 10, `x ${coins}`, { fontSize: '24px', fill: '#000' });
+
+        const orderText1 = this.add.text(109, 170, 'Order:', { fontSize: '14px', color: '#000' });
+        const orderText2 = this.add.text(77, 195, `Liner: \nFrosting: `, { fontSize: '12.5px', color: '#000' });
+
+        const updateOrder = () => {
+            const liners = ['blue', 'pink'];
+            const frostings = ['yellow', 'blue', 'pink'];
+
+            const randomLiner = liners[Math.floor(Math.random() * liners.length)];
+            const randomFrosting = frostings[Math.floor(Math.random() * frostings.length)];
+
+            orderText2.setText(`Liner: ${randomLiner}\nFrosting: ${randomFrosting}`);
+        };
+
+        updateOrder();
 
         this.input.setDraggable(pinkfrost);
         this.input.setDraggable(bluefrost);
@@ -36,30 +53,27 @@ export default class GameScene extends Phaser.Scene {
         pinkfrost.depth = 100
         bluefrost.depth = 100  
         yellowfrost.depth = 100
-        
 
-        this.input.on('drag', function (pointer: any, gameObject: { x: any; y: any },dragX: any, dragY: any){
+        this.input.on('drag', function (pointer: any, gameObject: { x: any; y: any }, dragX: any, dragY: any) {
             gameObject.x = dragX;
             gameObject.y = dragY;
-        })
-        this.input.on('drop', function (pointer: any, gameObject: { x: any; y: any; input: { enabled: boolean } }, dropZone: { x: any; y: any }) {
+        });
 
+        this.input.on('drop', (pointer, gameObject, dropZone) => {
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
-    
             gameObject.input.enabled = true;
-    
+
+            if ((gameObject === pinkfrost || gameObject === bluefrost || gameObject === yellowfrost) && (dropZone === zone || dropZone === zone2)) {
+                updateCoinCounter();
+            }
         });
 
         this.input.on('dragend', function (pointer: any, gameObject: { x: any; input: { dragStartX: any; dragStartY: any }; y: any }, dropped: any) {
-
-            if (!dropped)
-            {
+            if (!dropped) {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-
-    
         });
 
         const zone = this.add.zone(400, 350, 90, 70).setRectangleDropZone(90, 70);
@@ -70,50 +84,15 @@ export default class GameScene extends Phaser.Scene {
         const graphics2 = this.add.graphics();
         graphics2.lineStyle(1, 0xffffff);
         graphics2.strokeRect(zone2.x - zone2.input.hitArea.width / 2, zone2.y - zone2.input.hitArea.height / 2, zone2.input.hitArea.width, zone2.input.hitArea.height);
-        
-        function updateCoinCounter() {
-            coins++;
-            coinCounterText.setText(`x ${coins}`);
-        }
-  
-        this.input.on('drop', (pointer, gameObject, dropZone) => {
-            gameObject.x = dropZone.x;
-            gameObject.y = dropZone.y;
-            gameObject.input.enabled = true;
-            
-            if ((gameObject === pinkfrost || gameObject === bluefrost || gameObject === yellowfrost) && (dropZone === zone || dropZone === zone2)) {
-                updateCoinCounter();
-            }
 
-        const graphics1 = this.add.graphics();
-		graphics1.fillStyle(0xfdadac,1);
-		graphics1.fillRoundedRect(5, 5, 150, 60, 30);
-		graphics1.setInteractive();
-	
-
-		
-		const startGame = this.add.text(35,20,"Restart").setFont("20px Arial").setColor("#ffffff").setInteractive();
-
-		const renderStart = this.add.renderTexture(10,5,110,40).setInteractive();
-		renderStart.draw(graphics1);
-		renderStart.draw(startGame);
-		renderStart.setInteractive();
-		renderStart.on('pointerdown',  () => {
-            blueliner.setPosition(250, 570)
-            pinkliner.setPosition(150, 570)
-            pinkfrost.setPosition(820, 320)
-            yellowfrost.setPosition(740, 320)
-            bluefrost.setPosition(900, 320)
-		}, this);
-
-        startGame.destroy();
+        startGame.on('pointerdown', () => {
+            updateOrder();
+        });
 
         const storeButton = this.add.text(960, 20, 'Store').setFont("32px Arial").setColor("#ffffff").setInteractive();
-        
+
         storeButton.on('pointerdown', () => {
             this.scene.start('StoreScene');
         }, this);
-
-        });
     }
 }
