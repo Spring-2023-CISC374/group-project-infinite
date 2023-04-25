@@ -10,10 +10,9 @@ import tilemapScene from "./tilemapScene";
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: "app",
-  width: 12 * 16,
-  height: 6 * 16,
+  width: 1090,
+  height: 610,
   pixelArt: true,
-  zoom: 6,
   physics: {
     default: "arcade",
     arcade: {

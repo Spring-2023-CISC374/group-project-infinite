@@ -1,52 +1,72 @@
-import Phaser from 'phaser'
-
+import Phaser from "phaser";
 
 export default class HelloWorldScene extends Phaser.Scene {
-	constructor() {
-		super("bootGame")
-	}
+  constructor() {
+    super("bootGame");
+  }
 
-	preload() {
-		this.load.image('bakery','assets/bakery.png')
-	}  
-    
-	create() {
-		this.add.image(545, 305,'bakery');
+  preload() {
+    this.load.image("bakery", "assets/bakery.png");
+  }
 
-		this.add.text(385, 100, "Infinite").setFont("100px Arial").setColor("#ffffff");
+  create() {
+    this.add.image(545, 305, "bakery");
 
-		const graphics = this.add.graphics();
-		graphics.fillStyle(0xfdadac,1);
-		graphics.fillRoundedRect(300, 300, 200, 90, 20);	
+    this.add
+      .text(385, 100, "Infinite")
+      .setFont("100px Arial")
+      .setColor("#ffffff");
 
-		const startGame = this.add.text(52, 35, "Start Game").setFont("20px Arial").setColor("#ffffff").setBackgroundColor('transparent').setInteractive();
+    const graphics = this.add.graphics();
+    graphics.fillStyle(0xfdadac, 1);
+    graphics.fillRoundedRect(300, 300, 200, 90, 20);
 
-		const renderStart = this.add.renderTexture(300, 300, 200, 90).setInteractive();
-		renderStart.draw(graphics);
-		renderStart.draw(startGame);
-		renderStart.setInteractive();
-		renderStart.on('pointerdown',  () => {
-			this.scene.start('KitchenScene')
-		}, this);  
-  
-		startGame.destroy();
+    const startGame = this.add
+      .text(52, 35, "Start Game")
+      .setFont("20px Arial")
+      .setColor("#ffffff")
+      .setBackgroundColor("transparent")
+      .setInteractive();
 
-		const graphics2 = this.add.graphics();
-		graphics2.fillStyle(0xfdadac,1);
-		graphics2.fillRoundedRect(575, 300, 200, 90, 20);
-		
-		const instructions = this.add.text(52, 35, "Instructions").setFont("20px Arial").setColor("#ffffff").setBackgroundColor('transparent').setInteractive();
+    const renderStart = this.add
+      .renderTexture(300, 300, 200, 90)
+      .setInteractive();
+    renderStart.draw(graphics);
+    renderStart.draw(startGame);
+    renderStart.setInteractive();
+    renderStart.on(
+      "pointerdown",
+      () => {
+        this.scene.start("tilemapScene");
+      },
+      this
+    );
 
-		const renderStart2 = this.add.renderTexture(575, 300, 200, 90);
-		renderStart2.draw(graphics2);
-		renderStart2.draw(instructions);
-		renderStart2.setInteractive();
-		renderStart2.on('pointerdown', () => {
-			this.scene.start('InstructionsScene');
-		}, this);
+    startGame.destroy();
 
-		instructions.destroy();
+    const graphics2 = this.add.graphics();
+    graphics2.fillStyle(0xfdadac, 1);
+    graphics2.fillRoundedRect(575, 300, 200, 90, 20);
 
-  
-	}
+    const instructions = this.add
+      .text(52, 35, "Instructions")
+      .setFont("20px Arial")
+      .setColor("#ffffff")
+      .setBackgroundColor("transparent")
+      .setInteractive();
+
+    const renderStart2 = this.add.renderTexture(575, 300, 200, 90);
+    renderStart2.draw(graphics2);
+    renderStart2.draw(instructions);
+    renderStart2.setInteractive();
+    renderStart2.on(
+      "pointerdown",
+      () => {
+        this.scene.start("InstructionsScene");
+      },
+      this
+    );
+
+    instructions.destroy();
+  }
 }

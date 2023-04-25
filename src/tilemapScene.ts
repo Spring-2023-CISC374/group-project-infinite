@@ -19,13 +19,17 @@ export default class tilemapScene extends Phaser.Scene {
   }
 
   create() {
-    var eKey = this.input.keyboard.addKey("E");
+    //this.cameras.main.setSize(12 * 16, 6 * 16);
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("kitchen", "tiles");
     const floor = map.createLayer("floor", tileset, 0, 0);
     const background = map.createLayer("background", tileset, 0, 0);
     const equipment = map.createLayer("equipment", tileset, 0, 0);
     const stove = map.createLayer("stove", tileset, 0, 0);
+    floor.setScale(5.667);
+    background.setScale(5.667);
+    equipment.setScale(5.667);
+    stove.setScale(5.667);
     this.promptText = this.add
       .text(0, 0, "Press E to bake!", {
         fontFamily: "Arial",
@@ -47,7 +51,7 @@ export default class tilemapScene extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.player = this.physics.add.sprite(0, 0, "player").setScale(0.2);
+    this.player = this.physics.add.sprite(0, 0, "player");
 
     floor.setCollisionByProperty({ collides: true });
     this.player.setCollideWorldBounds(true);
@@ -60,9 +64,9 @@ export default class tilemapScene extends Phaser.Scene {
     if (!this.cursors) return;
 
     if (this.cursors.left.isDown) {
-      this.player?.setVelocityX(-100);
+      this.player?.setVelocityX(-300);
     } else if (this.cursors.right.isDown) {
-      this.player?.setVelocityX(100);
+      this.player?.setVelocityX(300);
     } else {
       this.player?.setVelocityX(0);
     }
