@@ -3,6 +3,7 @@ import Frosting from './Objects/Frosting'
 import Liner from './Objects/Liner'
 import DropZoneGraphic from './Objects/DropZoneGraphic'
 import DropZone from './Objects/DropZone'
+import Cupcake from './Objects/Cupcake'
 
 
 export default class GameScene extends Phaser.Scene {
@@ -19,6 +20,8 @@ export default class GameScene extends Phaser.Scene {
 
     blueLiner?: Liner;
     pinkLiner?: Liner;
+
+    userCupcake: Cupcake | null = null;
 
 	constructor() {
 		super("GameScene")
@@ -67,7 +70,25 @@ export default class GameScene extends Phaser.Scene {
 
     }
 
-    update() {
+    updateCupcake(): void {
+        if (!this.frostingZone || !this.linerZone) return;
 
+        if (!this.frostingZone.hasItem() || !this.linerZone.hasItem()) {
+            this.userCupcake = null;
+            return;
+        }
+        
+        if (this.userCupcake) return;
+
+        if (this.frostingZone.currItem && this.linerZone.currItem) {
+            this.userCupcake = new Cupcake(this.frostingZone.currItem, this.linerZone.currItem);
+            this.userCupcake.printCupcake();
+            return;
+        }
     }
+    
+    update() {
+        this.updateCupcake();
+    }
+
 }
