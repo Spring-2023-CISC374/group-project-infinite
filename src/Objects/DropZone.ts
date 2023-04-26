@@ -18,7 +18,11 @@ export default class DropZone extends Phaser.GameObjects.Zone {
         return true;
     }
 
-    setItem(gameObject: DraggableImage | null) {
+    setItem(gameObject: DraggableImage) {
         this.currItem = gameObject;
+    }
+
+    clearItem(): void {
+        this.currItem = null;
     }
 }

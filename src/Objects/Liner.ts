@@ -11,6 +11,7 @@ export default class Liner extends DraggableImage {
             if ((dropZone.zoneName === "linerZone" && !dropZone.hasItem()) || dropZone.currItem === this) {
                 this.setPosition(dropZone.x, dropZone.y);
                 dropZone.setItem(this);
+                zone.setItem(this);
             } 
             else {
                 this.setPosition(this.originalX, this.originalY);
