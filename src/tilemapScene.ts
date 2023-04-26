@@ -11,7 +11,8 @@ export default class tilemapScene extends Phaser.Scene {
   preload() {
     // load the PNG file
 
-    this.load.image("player", "assets/baker.png");
+    this.load.image("player1", "assets/bakerLeft.png");
+    this.load.image("player2", "assets/bakerRight.png");
     this.load.image("tiles", "assets/tileset.png");
 
     // load the JSON file
@@ -33,7 +34,7 @@ export default class tilemapScene extends Phaser.Scene {
     this.promptText = this.add
       .text(0, 0, "Press E to bake!", {
         fontFamily: "Arial",
-        fontSize: "10px",
+        fontSize: "50px",
         color: "#000",
       })
       .setVisible(false);
@@ -51,7 +52,7 @@ export default class tilemapScene extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.player = this.physics.add.sprite(0, 0, "player");
+    this.player = this.physics.add.sprite(0, 0, "player2");
 
     floor.setCollisionByProperty({ collides: true });
     this.player.setCollideWorldBounds(true);
@@ -65,8 +66,10 @@ export default class tilemapScene extends Phaser.Scene {
 
     if (this.cursors.left.isDown) {
       this.player?.setVelocityX(-300);
+      this.player?.setTexture("player1");
     } else if (this.cursors.right.isDown) {
       this.player?.setVelocityX(300);
+      this.player?.setTexture("player2");
     } else {
       this.player?.setVelocityX(0);
     }
