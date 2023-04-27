@@ -4,7 +4,7 @@ export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super("GameScene")
 	}
-    preload() {
+    preload() { 
         this.load.image('bakery2','assets/newbakery_drawing.png')
         this.load.image('blue-liner', 'assets/liner-blue.png')
 		this.load.image('pink-liner', 'assets/liner-pink.png')
@@ -43,6 +43,11 @@ export default class GameScene extends Phaser.Scene {
         };
 
         updateOrder();
+
+        const updateCoinCounter = () => {
+            coins++;
+            coinCounterText.setText(`x ${coins}`);
+        };
 
         this.input.setDraggable(pinkfrost);
         this.input.setDraggable(bluefrost);
@@ -87,6 +92,16 @@ export default class GameScene extends Phaser.Scene {
 
         startGame.on('pointerdown', () => {
             updateOrder();
+            pinkfrost.x = 820;
+            pinkfrost.y = 320;
+            bluefrost.x = 900;
+            bluefrost.y = 320;
+            yellowfrost.x = 740;
+            yellowfrost.y = 320;
+            pinkliner.x = 150;
+            pinkliner.y = 570;
+            blueliner.x = 250;
+            blueliner.y = 570;
         });
 
         const storeButton = this.add.text(960, 20, 'Store').setFont("32px Arial").setColor("#ffffff").setInteractive();
