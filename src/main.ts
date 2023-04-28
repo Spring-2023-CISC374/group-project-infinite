@@ -5,6 +5,7 @@ import GameScene from "./GameScene";
 import KitchenScene from "./KitchenScene";
 import InstructionsScene from "./InstructionScene";
 import StoreScene from "./StoreScene";
+import BakeScene from "./BakeScene";
 import tilemapScene from "./tilemapScene";
 
 const config: Phaser.Types.Core.GameConfig = {
@@ -16,13 +17,13 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 300 },
-      debug: true,
+      gravity: { y: 200 },
     },
   },
   scene: [
-    tilemapScene,
     HelloWorldScene,
+    tilemapScene,
+    BakeScene,
     KitchenScene,
     GameScene,
     InstructionsScene,
