@@ -45,7 +45,12 @@ export default class KitchenScene extends Phaser.Scene {
                 }
             });
         }, undefined, this);
-   
+
+        const backButton = this.add.text(16, 20, "Back").setFont("23px Arial").setColor("#000").setInteractive();
+        backButton.on('pointerdown', () => {
+            this.scene.start("bootGame");
+        }, this);
+        
     }  
 
     update() {
@@ -67,3 +72,4 @@ export default class KitchenScene extends Phaser.Scene {
 		}
     }
 }
+
