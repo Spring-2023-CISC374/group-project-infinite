@@ -19,7 +19,7 @@ export default class tilemapScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "assets/game.json");
   }
 
-  create(){
+  create() {
     this.scale.setGameSize(1152, 576);
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("kitchen", "tiles");
@@ -38,6 +38,19 @@ export default class tilemapScene extends Phaser.Scene {
         color: "#000",
       })
       .setVisible(false);
+
+    const backButton = this.add
+      .text(16, 20, "Back")
+      .setFont("23px Arial")
+      .setColor("#000")
+      .setInteractive();
+    backButton.on(
+      "pointerdown",
+      () => {
+        this.scene.start("bootGame");
+      },
+      this
+    );
     let startScene = false;
     const handleCollision = () => {
       this.promptText?.setVisible(true);
