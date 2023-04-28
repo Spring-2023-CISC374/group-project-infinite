@@ -19,18 +19,18 @@ export default class tilemapScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "assets/game.json");
   }
 
-  create() {
-    //this.cameras.main.setSize(12 * 16, 6 * 16);
+  create(){
+    this.scale.setGameSize(1152, 576);
     const map = this.make.tilemap({ key: "map" });
     const tileset = map.addTilesetImage("kitchen", "tiles");
     const floor = map.createLayer("floor", tileset, 0, 0);
     const background = map.createLayer("background", tileset, 0, 0);
     const equipment = map.createLayer("equipment", tileset, 0, 0);
     const stove = map.createLayer("stove", tileset, 0, 0);
-    floor.setScale(5.667);
-    background.setScale(5.667);
-    equipment.setScale(5.667);
-    stove.setScale(5.667);
+    floor.setScale(6);
+    background.setScale(6);
+    equipment.setScale(6);
+    stove.setScale(6);
     this.promptText = this.add
       .text(0, 0, "Press E to bake!", {
         fontFamily: "Arial",
@@ -44,6 +44,7 @@ export default class tilemapScene extends Phaser.Scene {
       this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
         if (event.key === "e") {
           this.scene.start("GameScene");
+          this.scale.setGameSize(1090, 610);
         }
       });
     };
