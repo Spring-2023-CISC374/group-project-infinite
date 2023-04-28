@@ -38,13 +38,14 @@ export default class tilemapScene extends Phaser.Scene {
         color: "#000",
       })
       .setVisible(false);
-
+    let startScene = false;
     const handleCollision = () => {
       this.promptText?.setVisible(true);
       this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
-        if (event.key === "e") {
+        if (event.key === "e" && !startScene) {
           this.scene.start("GameScene");
           this.scale.setGameSize(1090, 610);
+          startScene = true;
         }
       });
     };
