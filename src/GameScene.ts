@@ -21,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
     blueLiner?: Liner;
     pinkLiner?: Liner;
 
+    count = 5;
+
     userCupcake: Cupcake | null = null;
 
 	constructor() {
@@ -67,7 +69,19 @@ export default class GameScene extends Phaser.Scene {
         // storeButton.on('pointerdown', () => {
         //     this.scene.start('StoreScene');
         // }, this);
+        
+        const finishCupcake = this.add.text(460, 350, "Bake Cupcake").setFontSize(20);
+        finishCupcake.setInteractive();
+        finishCupcake.on('pointerdown', () => this.startBakeScene());
 
+        
+    }
+
+    startBakeScene(): void {
+            if (this.userCupcake != null){
+                this.userCupcake.printCupcake();
+                this.scene.start("BakeScene", this.getCupcake());
+            }
     }
 
     updateCupcake(): void {
@@ -86,7 +100,10 @@ export default class GameScene extends Phaser.Scene {
             return;
         }
     }
-    
+    getCupcake(){
+            return {liner: this.userCupcake?.liner, frosting: this.userCupcake?.frosting, count: this.count};
+    }
+
     update() {
         this.updateCupcake();
     }

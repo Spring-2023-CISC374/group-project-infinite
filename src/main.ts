@@ -5,6 +5,7 @@ import GameScene from './GameScene'
 import KitchenScene from './KitchenScene'
 import InstructionsScene from './InstructionScene'; 
 import StoreScene from './StoreScene';
+import BakeScene from './BakeScene';
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -17,7 +18,7 @@ const config: Phaser.Types.Core.GameConfig = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [HelloWorldScene, KitchenScene, GameScene, InstructionsScene, StoreScene]
+	scene: [HelloWorldScene,BakeScene, KitchenScene, GameScene, InstructionsScene, StoreScene]
 }
 
 export default new Phaser.Game(config)
