@@ -32,12 +32,12 @@ export default class tilemapScene extends Phaser.Scene {
     equipment.setScale(6);
     stove.setScale(6);
     this.promptText = this.add
-      .text(0, 0, "Press E to bake!", {
+      .text(550, 0, "Press E on oven to bake!", {
         fontFamily: "Arial",
         fontSize: "50px",
         color: "#000",
       })
-      .setVisible(false);
+      .setVisible(true);
 
     const backButton = this.add
       .text(16, 20, "Back")
@@ -53,7 +53,6 @@ export default class tilemapScene extends Phaser.Scene {
     );
     let startScene = false;
     const handleCollision = () => {
-      this.promptText?.setVisible(true);
       this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
         if (event.key === "e" && !startScene) {
           this.scene.start("GameScene");
