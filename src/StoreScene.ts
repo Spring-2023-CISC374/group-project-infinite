@@ -7,6 +7,7 @@ export default class StoreScene extends Phaser.Scene {
 
     preload() {
         this.load.image('store', 'assets/dessertbackground.png'); 
+        this.load.image('purpleFrosting', 'assets/purple-frosting.png');
     }
        
     create() {     
@@ -24,6 +25,15 @@ export default class StoreScene extends Phaser.Scene {
             this.scene.start('KitchenScene');
         }, this);
 
+        const purpleFrosting = this.add.image(265, 300, 'purpleFrosting');
+        purpleFrosting.setInteractive();
+        purpleFrosting.setScale(0.25);
+
+        purpleFrosting.on('pointerdown', () => {
+            purpleFrosting.setVisible(false); 
+        }, this);    
+
     }
 }
+
 
