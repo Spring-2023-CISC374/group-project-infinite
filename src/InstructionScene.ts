@@ -16,5 +16,8 @@ export default class InstructionsScene extends Phaser.Scene {
         backButton.on('pointerdown', () => {
             this.scene.start("bootGame");
         }, this);
+
+        const instructionsText = this.add.text(300, 160, "Welcome to the bakery!\n\nHere are some instructions:\n\n1. Drag the frosting and liner together to make a cupcake.\n\n2. Earns coins to use at the store.\n\n3. Enjoy your gaming experience!").setFont("25px Arial").setAlign("center").setColor("#000000");
+        
     }
 }
