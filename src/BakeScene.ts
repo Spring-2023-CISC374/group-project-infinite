@@ -41,7 +41,8 @@ export default class BakeScene extends Phaser.Scene {
         this.add.image(300, 280, 'uparrow').setScale(.025).setInteractive().on('pointerdown', () => updateCount(++count));
         this.add.image(300, 370, 'downarrow').setScale(.025).setInteractive().on('pointerdown', () => updateCount(--count));
         const FinishOrder = this.add.text(240, 390, "Finish Order").setFontSize(20).setInteractive().on('pointerdown', () => createCupcakes(count));
-
+        const finishedOrder = this.add.text(300, 120, "ORDER COMPLETED").setFontSize(40);
+        finishedOrder.setVisible(false);
         const createCupcakes = (count: number) =>{
             let xCor = 450;
             for(let i = 1; i < count; i++ ){
@@ -51,7 +52,9 @@ export default class BakeScene extends Phaser.Scene {
             }
             this.time.addEvent({delay: 500});
             if(this.orderCount == count){
-                this.add.text(300, 120, "ORDER COMPLETED").setFontSize(40);
+                finishedOrder.setVisible(true);
+            }else{
+                finishedOrder.setVisible(false);
             }
         }
         function updateCount(count: number){

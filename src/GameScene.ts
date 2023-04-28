@@ -21,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
     blueLiner?: Liner;
     pinkLiner?: Liner;
 
+    count = 5;
+
     userCupcake: Cupcake | null = null;
 
 	constructor() {
@@ -99,7 +101,7 @@ export default class GameScene extends Phaser.Scene {
         }
     }
     getCupcake(){
-            return {liner: this.userCupcake?.liner, frosting: this.userCupcake?.frosting};
+            return {liner: this.userCupcake?.liner, frosting: this.userCupcake?.frosting, count: this.count};
     }
 
     update() {
