@@ -1,39 +1,56 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
 
 export default class StoreScene extends Phaser.Scene {
-    constructor() {
-        super('StoreScene');
-    }
+  constructor() {
+    super("StoreScene");
+  }
 
-    preload() {
-        this.load.image('store', 'assets/dessertbackground.png'); 
-        this.load.image('purpleFrosting', 'assets/purple-frosting.png');
-    }
-       
-    create() {     
-        const storeButton = this.add.text(320, 20, 'Store').setFont('25px Arial').setColor('#ffffff').setInteractive();
+  preload() {
+    this.load.image("store", "assets/dessertbackground.png");
+    this.load.image("purpleFrosting", "assets/purple-frosting.png");
+  }
 
-        this.add.image(545, 305, 'store');
+  create() {
+    const storeButton = this.add
+      .text(320, 20, "Store")
+      .setFont("25px Arial")
+      .setColor("#ffffff")
+      .setInteractive();
 
-        storeButton.on('pointerdown', () => {
-            this.scene.start('StoreScene');
-        }, this);
-  
-        const backButton = this.add.text(20, 20, 'Back').setFont('23px Arial').setColor('#ffffff').setInteractive();
-  
-        backButton.on('pointerdown', () => {
-            this.scene.start('KitchenScene');
-        }, this);
+    this.add.image(545, 305, "store");
 
-        const purpleFrosting = this.add.image(265, 300, 'purpleFrosting');
-        purpleFrosting.setInteractive();
-        purpleFrosting.setScale(0.25);
+    storeButton.on(
+      "pointerdown",
+      () => {
+        this.scene.start("StoreScene");
+      },
+      this
+    );
 
-        purpleFrosting.on('pointerdown', () => {
-            purpleFrosting.setVisible(false); 
-        }, this);    
+    const backButton = this.add
+      .text(20, 20, "Back")
+      .setFont("23px Arial")
+      .setColor("#ffffff")
+      .setInteractive();
 
-    }
+    backButton.on(
+      "pointerdown",
+      () => {
+        this.scene.start("GameScene");
+      },
+      this
+    );
+
+    const purpleFrosting = this.add.image(265, 300, "purpleFrosting");
+    purpleFrosting.setInteractive();
+    purpleFrosting.setScale(0.25);
+
+    purpleFrosting.on(
+      "pointerdown",
+      () => {
+        purpleFrosting.setVisible(false);
+      },
+      this
+    );
+  }
 }
-
-

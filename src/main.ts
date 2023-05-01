@@ -21,11 +21,11 @@ const config: Phaser.Types.Core.GameConfig = {
     },
   },
   scene: [
+    GameScene,
     HelloWorldScene,
     tilemapScene,
     BakeScene,
     KitchenScene,
-    GameScene,
     InstructionsScene,
     StoreScene,
   ],
