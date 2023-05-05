@@ -1,20 +1,22 @@
 import Phaser from "phaser";
 import Frosting from "./Objects/Frosting";
 import Liner from "./Objects/Liner";
-import Cupcake from "./Objects/Cupcake";
 
 export default class BakeScene extends Phaser.Scene {
   protected liner!: Liner;
   protected frosting!: Frosting;
   protected orderCount!: number;
+  protected flag!: boolean;
 
   constructor() {
     super("BakeScene");
   }
-  init(data: { liner: Liner; frosting: Frosting; count: number }) {
+  init(data: { liner: Liner; frosting: Frosting; count: number; setflag: boolean}) {
+    console.log(data.setflag);
     this.frosting = data.frosting;
     this.liner = data.liner;
     this.orderCount = data.count;
+    this.flag = data.setflag;
   }
   preload() {
     this.load.image("bakery2", "assets/bakery.png");
@@ -63,16 +65,21 @@ export default class BakeScene extends Phaser.Scene {
         this.add.image(xCor, 350, this.liner.key).setScale(0.6);
         xCor = xCor + 50;
       }
-      this.time.addEvent({ delay: 500 });
       if (this.orderCount == count) {
         finishedOrder.setVisible(true);
+        this.time.delayedCall(1000,startGameScene, undefined, this);
       } else {
         finishedOrder.setVisible(false);
       }
     };
+    const startGameScene = () =>{
+        this.scene.start("GameScene", {setflag: true} )
+    }
     function updateCount(count: number) {
       console.log(count);
       countText.setText(`${count}`);
     }
   }
+  
 }
+

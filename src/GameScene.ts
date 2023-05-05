@@ -19,12 +19,20 @@ export default class GameScene extends Phaser.Scene {
   blueLiner?: Liner;
   pinkLiner?: Liner;
 
-  count = 5;
+  protected flag!: boolean;
+  count = 1;
+  orderLiner? : Liner;
+  orderFrosting? : Frosting;
 
   userCupcake: Cupcake | null = null;
 
   constructor() {
     super("GameScene");
+  }
+
+  init(data: {setflag: boolean}) {
+    console.log(data.setflag);
+    this.flag = data.setflag; 
   }
 
   preload() {
@@ -38,8 +46,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("flag: ",this.flag)
     this.add.image(550, 305, "bakery2").setScale(0.665);
     this.linerZone = new DropZone(this, 400, 350, "linerZone");
+
+
+
+
     this.linerZoneGraphic = new DropZoneGraphic(this, 400, 350);
 
     this.frostingZone = new DropZone(this, 400, 275, "frostingZone");
@@ -96,14 +109,21 @@ export default class GameScene extends Phaser.Scene {
     });
 
     const updateOrder = () => {
-      const liners = ["blue", "pink"];
-      const frostings = ["yellow", "blue", "pink"];
+      const liners = [this.blueLiner, this.pinkLiner];
+      const frostings = [this.yellowFrosting, this.blueFrosting, this.pinkFrosting];
+      const counts = [1, 2, 4, 6]
 
-      const randomLiner = liners[Math.floor(Math.random() * liners.length)];
-      const randomFrosting =
+      if(this.flag == false){
+        this.count = 1;
+      }else{
+        this.count = counts[Math.floor(Math.random() * counts.length)]
+      }
+
+      this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
+      this.orderFrosting =
         frostings[Math.floor(Math.random() * frostings.length)];
 
-      orderText2.setText(`Liner: ${randomLiner}\nFrosting: ${randomFrosting}`);
+      orderText2.setText(`Liner: ${this.orderLiner?.key.substring(0,this.orderLiner?.key.indexOf('-'))}\nFrosting: ${this.orderFrosting?.key.substring(0,this.orderFrosting?.key.indexOf('-'))}\nCount: ${this.count}`);
     };
 
     updateOrder();
@@ -118,6 +138,7 @@ export default class GameScene extends Phaser.Scene {
       .setFontSize(20);
     finishCupcake.setInteractive();
     finishCupcake.on("pointerdown", () => this.startBakeScene());
+
 
     const storeButton = this.add
       .text(960, 20, "Store")
@@ -137,7 +158,11 @@ export default class GameScene extends Phaser.Scene {
   startBakeScene(): void {
     if (this.userCupcake != null) {
       this.userCupcake.printCupcake();
-      this.scene.start("BakeScene", this.getCupcake());
+      if(this.userCupcake){
+        if(this.userCupcake.frosting === this.orderFrosting && this.userCupcake.liner === this.orderLiner){
+            this.scene.start("BakeScene", this.getCupcake());
+        }
+    }
     }
   }
 
@@ -165,6 +190,7 @@ export default class GameScene extends Phaser.Scene {
       liner: this.userCupcake?.liner,
       frosting: this.userCupcake?.frosting,
       count: this.count,
+      setflag: false
     };
   }
 
