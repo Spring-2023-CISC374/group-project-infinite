@@ -7,7 +7,7 @@ export default class BakeScene extends Phaser.Scene {
   protected liner!: Liner;
   protected frosting!: Frosting;
   protected orderCount!: number;
-
+ 
   constructor() {
     super("BakeScene");
   }
@@ -53,6 +53,13 @@ export default class BakeScene extends Phaser.Scene {
       .text(300, 120, "ORDER COMPLETED")
       .setFontSize(40);
     finishedOrder.setVisible(false);
+    FinishOrder.on("pointerdown", () => {
+      this.scene.start("GameScene", {
+        createdCupcakes: count,
+        liner: this.liner,
+        frosting: this.frosting,
+      });
+    });
     const createCupcakes = (count: number) => {
       let xCor = 450;
       for (let i = 1; i < count; i++) {
