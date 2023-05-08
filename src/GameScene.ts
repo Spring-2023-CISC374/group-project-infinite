@@ -19,6 +19,7 @@ export default class GameScene extends Phaser.Scene {
   blueLiner?: Liner;
   pinkLiner?: Liner;
 
+  private loopStatus?: boolean;
   count = 5;
 
   userCupcake: Cupcake | null = null;
@@ -30,6 +31,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
+    this.loopStatus = false;
     this.load.image("bakery2", "assets/third_bakery.png");
     this.load.image("blue-liner", "assets/liner-blue.png");
     this.load.image("pink-liner", "assets/liner-pink.png");
@@ -98,24 +100,36 @@ export default class GameScene extends Phaser.Scene {
       color: "#000",
     });
 
-    const deliveryBox = this.add.sprite(740, 320, "delivery-box").setScale(0.5);;
+    const deliveryBox = this.add.sprite(740, 320, "delivery-box").setScale(0.5);
 
     const updateOrder = () => {
       const liners = [this.blueLiner, this.pinkLiner];
-      const frostings = [this.yellowFrosting, this.blueFrosting, this.pinkFrosting];
-      const counts = [1, 2, 4, 6, 8]
+      const frostings = [
+        this.yellowFrosting,
+        this.blueFrosting,
+        this.pinkFrosting,
+      ];
+      const counts = [1, 2, 4, 6, 8];
 
-      if(this.flag == false){
+      if (this.flag == false) {
         this.count = 1;
-      }else{
-        this.count = counts[Math.floor(Math.random() * counts.length)]
+      } else {
+        this.count = counts[Math.floor(Math.random() * counts.length)];
       }
 
       this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
       this.orderFrosting =
         frostings[Math.floor(Math.random() * frostings.length)];
 
-      orderText2.setText(`Liner: ${this.orderLiner?.key.substring(0,this.orderLiner?.key.indexOf('-'))}\nFrosting: ${this.orderFrosting?.key.substring(0,this.orderFrosting?.key.indexOf('-'))}\nCount: ${this.count}`);
+      orderText2.setText(
+        `Liner: ${this.orderLiner?.key.substring(
+          0,
+          this.orderLiner?.key.indexOf("-")
+        )}\nFrosting: ${this.orderFrosting?.key.substring(
+          0,
+          this.orderFrosting?.key.indexOf("-")
+        )}\nCount: ${this.count}`
+      );
     };
 
     updateOrder();
@@ -126,15 +140,26 @@ export default class GameScene extends Phaser.Scene {
     };
 
     const finishCupcake = this.add
-    .text(460, 350, "Bake Cupcake")
-    .setFontSize(20);
-  finishCupcake.setInteractive();
-  finishCupcake.on("pointerdown", () => {
-    if (this.userCupcake != null) {
-      this.userCupcake.printCupcake();
-      this.scene.start("BakeScene", this.getCupcake());
-      // call the create method of the existing instance
-      this.cupcakeAnimationScene.create(this.getCupcake());
+      .text(460, 350, "Bake Cupcake")
+      .setFontSize(20);
+    finishCupcake.setInteractive();
+    finishCupcake.on("pointerdown", () => {
+      if (this.userCupcake != null) {
+        if(!this.loopStatus){
+          if(this.userCupcake.frosting === this.userCupcake.frosting && this.userCupcake.liner === this.userCupcake.liner){
+            const correct = this.add
+              .text(16, 20, "Correct")
+              .setFont("23px Arial")
+              .setColor("#000")
+              updateCoinCounter()
+          }
+        }
+        else{
+          this.userCupcake.printCupcake();
+          this.scene.start("BakeScene", this.getCupcake());
+          // call the create method of the existing instance
+          this.cupcakeAnimationScene.create(this.getCupcake());
+        }
       }
     });
 
@@ -156,10 +181,9 @@ export default class GameScene extends Phaser.Scene {
   startBakeScene(): void {
     if (this.userCupcake != null) {
       this.userCupcake.printCupcake();
-      this.scene.start('CupcakeAnimationScene');
+      this.scene.start("CupcakeAnimationScene");
     }
   }
-  
 
   updateCupcake(): void {
     if (!this.frostingZone || !this.linerZone) return;
