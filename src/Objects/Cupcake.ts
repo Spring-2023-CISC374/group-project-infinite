@@ -14,4 +14,9 @@ export default class Cupcake {
     printCupcake(): void {
         console.log(`Frosting: ${this.frosting ? this.frosting.key : "Null"}\nLiner: ${this.liner ? this.liner.key : "Null"}`)
     }
+    
+    reset(){
+        this.frosting.resetImage();
+        this.liner.resetImage();
+    }
 }

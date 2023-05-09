@@ -23,11 +23,32 @@ export default class GameScene extends Phaser.Scene {
 
   userCupcake: Cupcake | null = null;
 
+  cupcakeCount = 0;
+
+  coins = 0;
+
+  private incorrect?: Phaser.GameObjects.Text;
+
+  private correct?: Phaser.GameObjects.Text;
+
+  private orderText1?: Phaser.GameObjects.Text;
+
+  private orderText2?: Phaser.GameObjects.Text;
+
+  private cupcakeCountText?: Phaser.GameObjects.Text;
+
   private cupcakeAnimationScene!: CupcakeAnimationScene;
+
+  private deliveryBox: Phaser.GameObjects.Sprite | undefined;
+
+  private coinCounterText?: Phaser.GameObjects.Text;
+
 
   private loopStatus?: boolean;
   orderLiner: Liner | undefined;
   orderFrosting: Frosting | undefined;
+  flag: boolean | undefined;
+
 
   constructor() {
     super("GameScene");
@@ -43,6 +64,12 @@ export default class GameScene extends Phaser.Scene {
     this.load.image("yellow-frosting", "assets/yellow-frosting.png");
     this.load.image("delivery-box", "assets/deliverybox3.png");
     this.load.image("coin", "assets/coin.png");
+    this.load.image("delivery-boxBlueBlue", "assets/deliveryboxBlueBlue.png")
+    this.load.image("delivery-boxBluePink", "assets/deliveryboxBluePink.png")
+    this.load.image("delivery-boxPinkBlue", "assets/deliveryboxPinkBlue.png")
+    this.load.image("delivery-boxPinkPink", "assets/deliveryboxPinkPink.png")
+    this.load.image("delivery-boxYellowBlue", "assets/deliveryboxYellowBlue.png")
+    this.load.image("delivery-boxYellowPink", "assets/deliveryboxYellowPink.png")
   }
 
   create() {
@@ -87,69 +114,39 @@ export default class GameScene extends Phaser.Scene {
       .setColor("#ffffff")
       .setInteractive();
 
-    let coins = 0;
     const coinImage = this.add.image(520, 20, "coin").setScale(0.05);
-    const coinCounterText = this.add.text(550, 10, `x ${coins}`, {
+    this.coinCounterText = this.add.text(550, 10, `x ${this.coins}`, {
       fontSize: "24px",
       fill: "#000",
     });
 
-    const orderText1 = this.add.text(109, 170, "Order:", {
+    this.orderText1 = this.add.text(109, 170, "Order:", {
       fontSize: "14px",
       color: "#000",
     });
-    const orderText2 = this.add.text(78, 195, `Liner: \nFrosting: `, {
+    this.orderText2 = this.add.text(78, 195, `Liner: \nFrosting: `, {
       fontSize: "12.5px",
       color: "#000",
     });
-    const correct = this.add
-      .text(150, 350, "Correct")
-      .setFontSize(20)
-      .setVisible(false);
+    
+    this.updateOrder();
 
-    const incorrect = this.add
-      .text(150, 350, "Correct")
-      .setFontSize(20)
-      .setVisible(false);
+    this.correct = this.add
+    .text(150, 350, "Correct")
+    .setFontSize(20)
+    .setVisible(false);
 
-    const deliveryBox = this.add.sprite(740, 320, "delivery-box").setScale(0.5);
+    this.incorrect = this.add
+    .text(150, 350, "Incorrect, Try Again!")
+    .setFontSize(20)
+    .setVisible(false);
 
-    const updateOrder = () => {
-      const liners = [this.blueLiner, this.pinkLiner];
-      const frostings = [
-        this.yellowFrosting,
-        this.blueFrosting,
-        this.pinkFrosting,
-      ];
-      const counts = [1, 2, 4, 6, 8];
 
-      if (this.flag == false) {
-        this.count = 1;
-      } else {
-        this.count = counts[Math.floor(Math.random() * counts.length)];
-      }
+    this.deliveryBox = this.add.sprite(740, 320, "delivery-box").setScale(0.7);
 
-      this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
-      this.orderFrosting =
-        frostings[Math.floor(Math.random() * frostings.length)];
+    this.cupcakeCountText = this.add.text(760, 288, `${this.cupcakeCount}`).setFontSize(30).setColor("#000").setVisible(true);
 
-      orderText2.setText(
-        `Liner: ${this.orderLiner?.key.substring(
-          0,
-          this.orderLiner?.key.indexOf("-")
-        )}\nFrosting: ${this.orderFrosting?.key.substring(
-          0,
-          this.orderFrosting?.key.indexOf("-")
-        )}\nCount: ${this.count}`
-      );
-    };
-
-    updateOrder();
-
-    const updateCoinCounter = () => {
-      coins++;
-      coinCounterText.setText(`x ${coins}`);
-    };
+    this.updateDeliveryBox();
 
     const finishCupcake = this.add
       .text(460, 350, "Bake Cupcake")
@@ -159,9 +156,12 @@ export default class GameScene extends Phaser.Scene {
       if (this.userCupcake != null) {
         if (!this.loopStatus) {
           if (this.userCupcake.frosting === this.orderFrosting && this.userCupcake.liner === this.orderLiner) {
-            correct.setVisible(true);
+            this.cupcakeCount++;
+            this.correct!.setVisible(true);
+            this.userCupcake.reset();
           } else {
-            incorrect.setVisible(true);
+            this.incorrect!.setVisible(true);
+            this.userCupcake.reset();
           }
         } else {
           this.userCupcake.printCupcake();
@@ -223,5 +223,79 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     this.updateCupcake();
+    this.updateCupcakeText();
   }
+
+
+  updateCupcakeText(){
+    if(this.cupcakeCount == this.count){
+      this.updateOrder();
+      this.updateCoinCounter();
+      this.updateDeliveryBox();
+      this.cupcakeCount = 0;
+    }
+    this.cupcakeCountText?.setText(`${this.cupcakeCount}`);
+
+  }
+
+
+  updateOrder(){
+    const liners = [this.blueLiner, this.pinkLiner];
+      const frostings = [
+        this.yellowFrosting,
+        this.blueFrosting,
+        this.pinkFrosting,
+      ];
+      const counts = [1, 2, 4, 6, 8];
+
+      if (this.flag == false) {
+        this.count = 1;
+      } else {
+        this.count = counts[Math.floor(Math.random() * counts.length)];
+      }
+
+      this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
+      this.orderFrosting =
+        frostings[Math.floor(Math.random() * frostings.length)];
+
+      this.orderText2?.setText(
+        `Liner: ${this.orderLiner?.key.substring(
+          0,
+          this.orderLiner?.key.indexOf("-")
+        )}\nFrosting: ${this.orderFrosting?.key.substring(
+          0,
+          this.orderFrosting?.key.indexOf("-")
+        )}\nCount: ${this.count}`
+      );
+  
+  }
+
+  updateCoinCounter(){
+    this.coins++;
+    this.coinCounterText?.setText(`x ${this.coins}`);
+  }
+
+  updateDeliveryBox(){
+    if(this.orderFrosting === this.yellowFrosting){
+      if(this.orderLiner === this.blueLiner){
+        this.deliveryBox?.setTexture("delivery-boxYellowBlue");
+      }else if(this.orderLiner === this.pinkLiner){
+        this.deliveryBox?.setTexture("delivery-boxYellowPink");
+      }
+    }else if(this.orderFrosting === this.blueFrosting){
+      if(this.orderLiner === this.blueLiner){
+        this.deliveryBox?.setTexture("delivery-boxBlueBlue");
+      }else if(this.orderLiner === this.pinkLiner){
+        this.deliveryBox?.setTexture("delivery-boxBluePink");
+      }
+    }else if(this.orderFrosting === this.pinkFrosting){
+      if(this.orderLiner === this.blueLiner){
+        this.deliveryBox?.setTexture("delivery-boxPinkBlue");
+      }else if(this.orderLiner === this.pinkLiner){
+        this.deliveryBox?.setTexture("delivery-boxPinkPink");
+      }
+    }
+  }
+
+
 }
