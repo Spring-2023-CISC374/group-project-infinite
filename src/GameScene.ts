@@ -47,11 +47,14 @@ export default class GameScene extends Phaser.Scene {
   private loopStatus?: boolean;
   orderLiner: Liner | undefined;
   orderFrosting: Frosting | undefined;
-  flag: boolean | undefined;
+  flag = false;
 
 
   constructor() {
     super("GameScene");
+  }
+  init(data: { flag:boolean}) {
+    this.flag = data.flag;
   }
 
   preload() {
@@ -73,6 +76,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    console.log(this.flag);
     this.add.image(550, 303, "bakery2").setScale(0.671);
     this.linerZone = new DropZone(this, 400, 350, "linerZone");
     this.linerZoneGraphic = new DropZoneGraphic(this, 400, 350);
@@ -154,7 +158,7 @@ export default class GameScene extends Phaser.Scene {
     finishCupcake.setInteractive();
     finishCupcake.on("pointerdown", () => {
       if (this.userCupcake != null) {
-        if (!this.loopStatus) {
+        if (!this.flag) {
           if (this.userCupcake.frosting === this.orderFrosting && this.userCupcake.liner === this.orderLiner) {
             this.cupcakeCount++;
             this.correct!.setVisible(true);
@@ -165,6 +169,8 @@ export default class GameScene extends Phaser.Scene {
           }
         } else {
           this.userCupcake.printCupcake();
+          this.coins = this.coins + this.count;
+          this.updateCupcakeText();
           this.scene.start("BakeScene", this.getCupcake());
           // call the create method of the existing instance
           this.cupcakeAnimationScene.create(this.getCupcake());
@@ -248,11 +254,8 @@ export default class GameScene extends Phaser.Scene {
       ];
       const counts = [1, 2, 4, 6, 8];
 
-      if (this.flag == false) {
-        this.count = 1;
-      } else {
-        this.count = counts[Math.floor(Math.random() * counts.length)];
-      }
+
+      this.count = counts[Math.floor(Math.random() * counts.length)];
 
       this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
       this.orderFrosting =

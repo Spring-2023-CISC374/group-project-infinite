@@ -56,7 +56,7 @@ export default class tilemapScene extends Phaser.Scene {
     const handleCollision = () => {
       this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
         if (event.key === "e" && !startScene) {
-          this.scene.start("GameScene");
+          this.scene.start("GameScene", {flag:false});
           this.scale.setGameSize(1090, 610);
           startScene = true;
         }
