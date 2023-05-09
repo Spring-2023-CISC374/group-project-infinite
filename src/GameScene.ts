@@ -187,7 +187,7 @@ export default class GameScene extends Phaser.Scene {
     storeButton.on(
       "pointerdown",
       () => {
-        this.scene.start("StoreScene");
+        this.scene.start("StoreScene", {gamecoins: this.coins});
       },
       this
     );

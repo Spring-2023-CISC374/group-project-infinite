@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 
 export default class StoreScene extends Phaser.Scene {
-  
+  protected coins!: number;
   constructor() {
     super("StoreScene");
   }
-    
+  init(data: { gamecoins:number}) {
+    this.coins = data.gamecoins;
+  }
+
   visible = true;
   preload() {
     this.load.image("store", "assets/dessertbackground.png");
@@ -14,6 +17,7 @@ export default class StoreScene extends Phaser.Scene {
   }
 
   create() {
+    console.log(this.coins)
     const storeButton = this.add
       .text(320, 20, "Store")
       .setFont("25px Arial")
@@ -57,10 +61,12 @@ export default class StoreScene extends Phaser.Scene {
     }
   }
   startGameScene(){
-    if(this.visible){
-      this.visible = false;
+    if(this.coins == 5){
+      if(this.visible){
+        this.visible = false;
+      }
+      this.scene.start("GameScene",{flag: true});
     }
-    this.scene.start("GameScene",{flag: true});
     
 
   }
