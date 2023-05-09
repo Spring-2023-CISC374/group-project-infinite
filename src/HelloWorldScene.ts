@@ -10,6 +10,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   create() {
+    this.scale.setGameSize(1090, 610);
     this.add.image(545, 305, "bakery");
 
     this.add

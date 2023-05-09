@@ -48,6 +48,7 @@ export default class tilemapScene extends Phaser.Scene {
       "pointerdown",
       () => {
         this.scene.start("bootGame");
+        this.scale.setGameSize(1090, 610);
       },
       this
     );
