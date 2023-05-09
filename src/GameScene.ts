@@ -170,7 +170,7 @@ export default class GameScene extends Phaser.Scene {
         } else {
           this.userCupcake.printCupcake();
           this.coins = this.coins + this.count;
-          this.updateCupcakeText();
+          this.updateCoinCounter();
           this.scene.start("BakeScene", this.getCupcake());
           // call the create method of the existing instance
           this.cupcakeAnimationScene.create(this.getCupcake());
@@ -254,8 +254,11 @@ export default class GameScene extends Phaser.Scene {
       ];
       const counts = [1, 2, 4, 6, 8];
 
-
-      this.count = counts[Math.floor(Math.random() * counts.length)];
+      if (this.flag == false) {
+        this.count = 1;
+      } else {
+        this.count = counts[Math.floor(Math.random() * counts.length)];
+      }
 
       this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
       this.orderFrosting =
