@@ -4,6 +4,7 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
     originalX: number;
     originalY: number;
     key: string;
+    zone: DropZone;
 
     constructor(scene: Phaser.Scene, x: number, y: number, imageKey: string, zone: DropZone) {
         super(scene, x, y, imageKey);
@@ -12,6 +13,7 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
         this.key = imageKey;
         this.setInteractive();
         scene.input.setDraggable(this);
+        this.zone = zone;
 
         this.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
             this.setPosition(dragX, dragY);
@@ -34,5 +36,6 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
     resetImage(){
         this.x = this.originalX;
         this.y = this.originalY;
+        this.zone.clearItem();
     }
 }
