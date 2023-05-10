@@ -51,7 +51,8 @@ export default class GameScene extends Phaser.Scene {
   constructor() {
     super("GameScene");
   }
-  init(data: { flag:boolean}) {
+  init(data: { flag:boolean, coins: number}) {
+    this.coins = data.coins;
     this.flag = data.flag;
   }
 
@@ -220,12 +221,14 @@ export default class GameScene extends Phaser.Scene {
       liner: this.userCupcake?.liner,
       frosting: this.userCupcake?.frosting,
       count: this.count,
+      coins: this.coins
     };
   }
 
   update() {
     this.updateCupcake();
     this.updateCupcakeText();
+    this.updateCoinCounterText();
   }
 
 
@@ -250,11 +253,7 @@ export default class GameScene extends Phaser.Scene {
       ];
       const counts = [1, 2, 4, 6, 8];
 
-      if (this.flag == false) {
-        this.count = 1;
-      } else {
-        this.count = counts[Math.floor(Math.random() * counts.length)];
-      }
+      this.count = counts[Math.floor(Math.random() * counts.length)];
 
       this.orderLiner = liners[Math.floor(Math.random() * liners.length)];
       this.orderFrosting =
@@ -274,6 +273,9 @@ export default class GameScene extends Phaser.Scene {
 
   updateCoinCounter(){
     this.coins++;
+    this.coinCounterText?.setText(`x ${this.coins}`);
+  }
+  updateCoinCounterText(){
     this.coinCounterText?.setText(`x ${this.coins}`);
   }
 
