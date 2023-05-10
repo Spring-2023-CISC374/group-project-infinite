@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 import HelloWorldScene from "./HelloWorldScene";
 import GameScene from "./GameScene";
-import KitchenScene from "./KitchenScene";
 import InstructionsScene from "./InstructionScene";
 import StoreScene from "./StoreScene";
 import BakeScene from "./BakeScene";
@@ -25,7 +24,6 @@ const config: Phaser.Types.Core.GameConfig = {
     GameScene,
     tilemapScene,
     BakeScene,
-    KitchenScene,
     InstructionsScene,
     StoreScene,
   ],

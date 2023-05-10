@@ -25,7 +25,7 @@ export default class InstructionsScene extends Phaser.Scene {
       this
     );
 
-    const instructionsText = this.add
+    this.add
       .text(
         300,
         160,
