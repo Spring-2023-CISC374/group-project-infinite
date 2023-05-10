@@ -120,9 +120,8 @@ export default class GameScene extends Phaser.Scene {
 
     const coinImage = this.add.image(520, 20, "coin").setScale(0.05);
     this.coinCounterText = this.add.text(550, 10, `x ${this.coins}`, {
-      fontSize: "24px",
-      fill: "#000",
-    });
+      fontSize: "24px"
+    }).setColor("#000");
 
     this.orderText1 = this.add.text(109, 170, "Order:", {
       fontSize: "14px",
