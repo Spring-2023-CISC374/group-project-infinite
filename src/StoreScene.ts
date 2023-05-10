@@ -43,7 +43,7 @@ export default class StoreScene extends Phaser.Scene {
     backButton.on(
       "pointerdown",
       () => {
-        this.scene.start("GameScene");
+        this.scene.start("GameScene", {flag:false, coins: this.coins});
       },
       this
     );
@@ -61,14 +61,12 @@ export default class StoreScene extends Phaser.Scene {
     }
   }
   startGameScene(){
-    if(this.coins == 1){
+    if(this.coins >= 5){
       if(this.visible){
         this.visible = false;
       }
-      this.coins = this.coins - 1;
+      this.coins = this.coins - 5;
       this.scene.start("GameScene",{flag: true, coins: this.coins});
     }
-    
-
   }
 }
