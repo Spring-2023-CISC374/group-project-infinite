@@ -29,6 +29,10 @@ export default class DraggableImage extends Phaser.GameObjects.Image {
                  zone.clearItem();
             }
         })
+    }
 
+    resetImage(){
+        this.x = this.originalX;
+        this.y = this.originalY;
     }
 }

@@ -5,6 +5,7 @@ export default class tilemapScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stove?: Phaser.Types.Tilemaps.TiledObject;
   promptText?: Phaser.GameObjects.Text;
+  coins = 0;
   constructor() {
     super("tilemapScene");
   }
@@ -48,6 +49,7 @@ export default class tilemapScene extends Phaser.Scene {
       "pointerdown",
       () => {
         this.scene.start("bootGame");
+        this.scale.setGameSize(1090, 610);
       },
       this
     );
@@ -55,7 +57,7 @@ export default class tilemapScene extends Phaser.Scene {
     const handleCollision = () => {
       this.input.keyboard.once("keydown", (event: KeyboardEvent) => {
         if (event.key === "e" && !startScene) {
-          this.scene.start("GameScene");
+          this.scene.start("GameScene", {flag:false, coins:this.coins});
           this.scale.setGameSize(1090, 610);
           startScene = true;
         }

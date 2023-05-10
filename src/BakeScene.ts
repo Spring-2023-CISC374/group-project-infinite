@@ -6,14 +6,19 @@ export default class BakeScene extends Phaser.Scene {
   protected liner!: Liner;
   protected frosting!: Frosting;
   protected orderCount!: number;
+  private incorrect?: Phaser.GameObjects.Text;
+  private coins?: number;
 
+  correct?: Phaser.GameObjects.Text;
   constructor() {
     super("BakeScene");
   }
-  init(data: { liner: Liner; frosting: Frosting; count: number }) {
+  count = 0;
+  init(data: { liner: Liner; frosting: Frosting; count: number, coins:number}) {
     this.frosting = data.frosting;
     this.liner = data.liner;
     this.orderCount = data.count;
+    this.coins = data.coins;
   }
   preload() {
     this.load.image("bakery2", "assets/bakery.png");
@@ -28,50 +33,50 @@ export default class BakeScene extends Phaser.Scene {
 
   create() {
     this.add.image(545, 305, "bakery2");
-    let count = 0;
-    const countText = this.add.text(292, 310, `${count}`).setFontSize(30);
+    const countText = this.add.text(292, 310, `${this.count}`).setFontSize(30);
     console.log(this.frosting.key);
     this.add.image(400, 290, this.frosting.key).setScale(0.2).setDepth(100);
     this.add.image(400, 350, this.liner.key).setScale(0.6);
+    
+    this.correct = this.add
+    .text(150, 350, "Correct")
+    .setFontSize(20)
+    .setVisible(false);
+
+    this.incorrect = this.add
+    .text(150, 350, "Incorrect, Try Again!")
+    .setFontSize(20)
+    .setVisible(false);
+    
     this.add
       .image(300, 280, "uparrow")
       .setScale(0.025)
       .setInteractive()
-      .on("pointerdown", () => updateCount(++count));
+      .on("pointerdown", () => updateCount(++this.count));
     this.add
       .image(300, 370, "downarrow")
       .setScale(0.025)
       .setInteractive()
-      .on("pointerdown", () => updateCount(--count));
-    this.add
+      .on("pointerdown", () => updateCount(--this.count));
+    const FinishOrder = this.add
       .text(240, 390, "Finish Order")
       .setFontSize(20)
       .setInteractive()
-      .on("pointerdown", () => createCupcakes(count));
     const finishedOrder = this.add
       .text(300, 120, "ORDER COMPLETED")
       .setFontSize(40);
     finishedOrder.setVisible(false);
-    const createCupcakes = (count: number) => {
-      let xCor = 450;
-      for (let i = 1; i < count; i++) {
-        this.add
-          .image(xCor, 290, this.frosting.key)
-          .setScale(0.2)
-          .setDepth(100);
-        this.add.image(xCor, 350, this.liner.key).setScale(0.6);
-        xCor = xCor + 50;
-      }
-      this.time.addEvent({ delay: 500 });
-      if (this.orderCount == count) {
-        finishedOrder.setVisible(true);
-      } else {
-        finishedOrder.setVisible(false);
-      }
-    };
+    FinishOrder.on("pointerdown", () =>  this.startGameScene());
     function updateCount(count: number) {
       console.log(count);
       countText.setText(`${count}`);
+    }
+  }
+  startGameScene(){
+    if(this.count != this.orderCount){
+      this.incorrect?.setVisible(true)
+    }else{
+      this.scene.start("GameScene", {flag: true, coins: this.coins});
     }
   }
 }
