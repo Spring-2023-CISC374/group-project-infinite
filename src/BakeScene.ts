@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Frosting from "./Objects/Frosting";
 import Liner from "./Objects/Liner";
-import Cupcake from "./Objects/Cupcake";
 
 export default class BakeScene extends Phaser.Scene {
   protected liner!: Liner;
@@ -10,7 +9,7 @@ export default class BakeScene extends Phaser.Scene {
   private incorrect?: Phaser.GameObjects.Text;
   private coins?: number;
 
-  private correct?: Phaser.GameObjects.Text;
+  correct?: Phaser.GameObjects.Text;
   constructor() {
     super("BakeScene");
   }
