@@ -4,7 +4,7 @@ export default class tilemapScene extends Phaser.Scene {
   private player?: Phaser.Physics.Arcade.Sprite;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stove?: Phaser.Types.Tilemaps.TiledObject;
-  private promptText?: Phaser.GameObjects.Text;
+  promptText?: Phaser.GameObjects.Text;
   constructor() {
     super("tilemapScene");
   }

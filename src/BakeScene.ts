@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Frosting from "./Objects/Frosting";
 import Liner from "./Objects/Liner";
-import Cupcake from "./Objects/Cupcake";
 
 export default class BakeScene extends Phaser.Scene {
   protected liner!: Liner;
@@ -44,7 +43,7 @@ export default class BakeScene extends Phaser.Scene {
       .setScale(0.025)
       .setInteractive()
       .on("pointerdown", () => updateCount(--count));
-    const FinishOrder = this.add
+    this.add
       .text(240, 390, "Finish Order")
       .setFontSize(20)
       .setInteractive()
