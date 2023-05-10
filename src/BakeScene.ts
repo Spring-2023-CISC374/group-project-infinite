@@ -8,16 +8,18 @@ export default class BakeScene extends Phaser.Scene {
   protected frosting!: Frosting;
   protected orderCount!: number;
   private incorrect?: Phaser.GameObjects.Text;
+  private coins?: number;
 
   private correct?: Phaser.GameObjects.Text;
   constructor() {
     super("BakeScene");
   }
   count = 0;
-  init(data: { liner: Liner; frosting: Frosting; count: number }) {
+  init(data: { liner: Liner; frosting: Frosting; count: number, coins:number}) {
     this.frosting = data.frosting;
     this.liner = data.liner;
     this.orderCount = data.count;
+    this.coins = data.coins;
   }
   preload() {
     this.load.image("bakery2", "assets/bakery.png");
@@ -75,7 +77,7 @@ export default class BakeScene extends Phaser.Scene {
     if(this.count != this.orderCount){
       this.incorrect?.setVisible(true)
     }else{
-      this.scene.start("GameScene", {flag: true});
+      this.scene.start("GameScene", {flag: true, coins: this.coins});
     }
   }
 }
