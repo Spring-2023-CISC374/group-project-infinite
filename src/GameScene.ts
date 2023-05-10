@@ -31,20 +31,18 @@ export default class GameScene extends Phaser.Scene {
 
   private correct?: Phaser.GameObjects.Text;
 
-  private orderText1?: Phaser.GameObjects.Text;
+  orderText1?: Phaser.GameObjects.Text;
 
   private orderText2?: Phaser.GameObjects.Text;
 
   private cupcakeCountText?: Phaser.GameObjects.Text;
 
-  private cupcakeAnimationScene!: CupcakeAnimationScene;
+  //private cupcakeAnimationScene!: CupcakeAnimationScene;
 
   private deliveryBox: Phaser.GameObjects.Sprite | undefined;
 
   private coinCounterText?: Phaser.GameObjects.Text;
 
-
-  private loopStatus?: boolean;
   orderLiner: Liner | undefined;
   orderFrosting: Frosting | undefined;
   flag = false;
@@ -58,7 +56,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.loopStatus = false;
     this.load.image("bakery2", "assets/third_bakery.png");
     this.load.image("blue-liner", "assets/liner-blue.png");
     this.load.image("pink-liner", "assets/liner-pink.png");
@@ -112,17 +109,16 @@ export default class GameScene extends Phaser.Scene {
     this.add
       .graphics({ fillStyle: { color: 0xfdadac } })
       .fillEllipse(70, 30, 120, 50);
-    const startGame = this.add
+    this.add
       .text(35, 20, "Restart")
       .setFont("20px Arial")
       .setColor("#ffffff")
       .setInteractive();
 
-    const coinImage = this.add.image(520, 20, "coin").setScale(0.05);
+    this.add.image(520, 20, "coin").setScale(0.05);
     this.coinCounterText = this.add.text(550, 10, `x ${this.coins}`, {
-      fontSize: "24px",
-      fill: "#000",
-    });
+      fontSize: "24px"
+    }).setColor("#000");
 
     this.orderText1 = this.add.text(109, 170, "Order:", {
       fontSize: "14px",
@@ -173,7 +169,7 @@ export default class GameScene extends Phaser.Scene {
           this.updateCoinCounter();
           this.scene.start("BakeScene", this.getCupcake());
           // call the create method of the existing instance
-          this.cupcakeAnimationScene.create(this.getCupcake());
+          //this.cupcakeAnimationScene.create(this.getCupcake());
         }
       }
     });
