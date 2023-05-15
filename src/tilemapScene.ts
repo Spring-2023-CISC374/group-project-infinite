@@ -1,7 +1,4 @@
 import Phaser from "phaser";
-import BakerLeft from "../public/assets/BakerLeft.png";
-import BakerRight from "../public/assets/BakerRight.png";
-
 export default class tilemapScene extends Phaser.Scene {
   private player?: Phaser.Physics.Arcade.Sprite;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -14,8 +11,8 @@ export default class tilemapScene extends Phaser.Scene {
   preload() {
     // load the PNG file
 
-    this.load.image("player1", BakerLeft);
-    this.load.image("player2", BakerRight);
+    this.load.image("player1", "assets/BakerLeft.png");
+    this.load.image("player2", "assets/BakerRight.png");
     this.load.image("tiles", "assets/tileset.png");
 
     // load the JSON file
