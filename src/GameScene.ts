@@ -159,9 +159,11 @@ export default class GameScene extends Phaser.Scene {
           if (this.userCupcake.frosting === this.orderFrosting && this.userCupcake.liner === this.orderLiner) {
             this.cupcakeCount++;
             this.correct!.setVisible(true);
+            this.incorrect!.setVisible(false);
             this.userCupcake.reset();
           } else {
             this.incorrect!.setVisible(true);
+            this.correct!.setVisible(false);
             this.userCupcake.reset();
           }
         } else {
