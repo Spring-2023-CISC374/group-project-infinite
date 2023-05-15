@@ -1,4 +1,8 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10536964&assignment_repo_type=AssignmentRepo)
-# group-game-project
+Alex and K: 
+Main kitchen component that deals with overall movement of characters and leads to every scene based on interactions within this scene. Its our main scene if you will and will be where everything is layed out and show such as player customization, mini games, the baking of cupcakes etc. This will let the user choose whatever activity they want to do from here.
 
-This assignment is where you will submit your code for your MVP as well as the rest of the versions of your educational game.
+Ryan:
+Created the play component and gave it movement and life. Set up boundaries on the map so that the character stays inside of bounds.
+
+Sara:
+Created the home screen and the baking component scene so that when you interact with the counter-top where the baking stuff will be in the kitchen, it will direct you to the baking station where you can drag and drop and create cupcakes as you wish.
