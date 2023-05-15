@@ -69,5 +69,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     );
 
     instructions.destroy();
+
+    console.log("hello")
   }
 }
